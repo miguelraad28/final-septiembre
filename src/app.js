@@ -3,28 +3,51 @@ import enviroment from './config/enviroment.config.js';
 import cookieParser from "cookie-parser";
 import handlebars from "express-handlebars";
 import path from "node:path";
-import {fileURLToPath} from 'url';
+import { fileURLToPath } from 'url';
 
-const {PORT} = enviroment
+const { PORT } = enviroment
+export const initializeApp = async () => {
 
-export const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+    const app = express()
 
-const app = express()
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
 
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-app.use(cookieParser());
+    // Server config
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
+    app.use(cookieParser());
 
-app.engine('handlebars', handlebars.engine());
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'handlebars');
+    // Handlebars
+    app.engine('handlebars', handlebars.engine());
+    app.set('views', path.join(__dirname, 'views'));
+    app.set('view engine', 'handlebars');
 
-app.get("/", (req, res) => {
-    res.send("UP")
-})
+    // Files
+    app.use(express.static(path.join(__dirname, 'public')));
+
+    // Routes
+    app.get("/", (req, res) => {
+        return res.render("home", { userIsLoggedIn: true })
+    })
+    // Not found page
+    app.get("*", (req, res) => {
+        return res.render("notFound")
+    })
 
 
-app.listen(PORT, () => {
-	console.log(`Server listening at http://localhost:${PORT}`);
-});
+    return app
+}
+const startServer = async () => {
+	try {
+		const app = await initializeApp();
+		app.listen(PORT, () => {
+			logger.info(`Server listening at http://localhost:${PORT}`);
+		});
+	} catch (error) {
+		logger.error(`Failed to start server: ${error}`);
+	}
+};
+if (isMainModule) {
+	startServer();
+}

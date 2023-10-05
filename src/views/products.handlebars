@@ -1,0 +1,33 @@
+<style>
+</style>
+
+  <h1>Products</h1>
+  <div class="productsContainer">
+    {{#each payload}}
+      <div class="productCard">
+        <h2>{{title}}</h2>
+        <p>{{description}}</p>
+        <p>Price: {{price}}</p>
+        <p>Stock: {{stock}}</p>
+        <img src="{{thumbnails}}" alt="{{name}}">
+        <form action="/api/carts/{{cartId}}/product/{{id}}" method="POST">
+          <button type="submit">Add to Cart</button>
+        </form>
+      </div>
+    {{/each}}
+  </div>
+  <p>Status: {{status}}</p>
+  <p>Code: {{code}}</p>
+  <p>Category: {{category}}</p>
+  <p>Total Pages: {{totalPages}}</p>
+  <p>Prev Page: {{prevPage}}</p>
+  <p>Next Page: {{nextPage}}</p>
+  <p>Page: {{page}}</p>
+  <p>Has Prev Page: {{hasPrevPage}}</p>
+  <p>Has Next Page: {{hasNextPage}}</p>
+  {{#if prevLink}}
+    <a href="{{prevLink}}">Previous Page</a>
+  {{/if}}
+  {{#if nextLink}}
+    <a href="{{nextLink}}">Next Page</a>
+  {{/if}}
