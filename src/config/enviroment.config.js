@@ -16,5 +16,6 @@ dotenv.config({
 enviroment.PORT = process.env.PORT;
 enviroment.MONGO_URL = process.env.MONGO_URL;
 enviroment.NODE_ENV = process.env.NODE_ENV;
+enviroment.PERSISTANCE = process.env.PERSISTANCE
 
 export default enviroment;
