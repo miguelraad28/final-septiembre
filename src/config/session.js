@@ -1,7 +1,7 @@
-import MongoSingleton from './mongo.config.js';
+import MongoSingleton from './mongo.js';
 import MongoStore from 'connect-mongo';
-import enviroment from './enviroment.config.js';
-import {logger} from './logger.config.js';
+import enviroment from './environment.js';
+import {logger} from './logger.js';
 import session from 'express-session';
 
 const {MONGO_URL, SESSION_SECRET} = enviroment;
@@ -14,7 +14,7 @@ export const configureSession = () => {
 			saveUninitialized: false,
 			store: MongoStore.create({
 				mongoUrl: MONGO_URL,
-				ttl: 86400, // expiration: 1 día
+				ttl: 172800,
 			}),
 		});
 	} else {

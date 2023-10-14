@@ -1,15 +1,16 @@
-import { isMainModule, rootDirectory } from './config/dirname.config.js';
+import { isMainModule, rootDirectory } from './config/dirname.js';
 import express from "express";
-import enviroment from './config/enviroment.config.js';
+import enviroment from './config/environment.js';
 import cookieParser from "cookie-parser";
 import handlebars from "express-handlebars";
 import path from "node:path";
 // Passport
-import iniPassport from './config/passport.config.js';
+import iniPassport from './config/passport.js';
 import passport from 'passport';
-import {configureSession} from './config/session.config.js';
+import {configureSession} from './config/session.js';
 // Routers
 import {initializeViewsRoutes} from "./routes/views.routes.js"
+import { initializeAuthRoutes } from './routes/auth.routes.js';
 
 const { PORT } = enviroment
 export const initializeApp = async () => {
@@ -38,9 +39,15 @@ export const initializeApp = async () => {
 
     // Routers
     const viewsRouter = await initializeViewsRoutes()
+    const authRouter = await initializeAuthRoutes();
+
+    // Route setup
+    app.use('/', viewsRouter);
+    app.use('/api/users', authRouter);
 
     // Routes
-    app.get("/", viewsRouter)
+    app.use("/", viewsRouter)
+
     // Not found page
     app.get("*", (req, res) => {
         return res.render("notFound")

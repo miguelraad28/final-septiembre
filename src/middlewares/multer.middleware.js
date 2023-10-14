@@ -1,4 +1,4 @@
-import {confirmDirectoryExists} from '../config/dirname.config.js';
+import {confirmDirectoryExists} from '../config/dirname.js';
 import multer from 'multer';
 import path from 'path';
 
@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
 
 		const dirPath = path.join('./uploads', folder);
 
-		ensureDirExists(dirPath);
+		confirmDirectoryExists(dirPath);
 
 		cb(null, dirPath);
 	},

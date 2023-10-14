@@ -1,7 +1,7 @@
 import CustomError from '../services/errors/custom-error.js';
-import EErrors from '../services/errors/enums.js';
-import enviroment from './enviroment.config.js';
-import {logger} from './logger.config.js';
+import Errors from '../services/errors/enums.js';
+import enviroment from './environment.js';
+import {logger} from './logger.js';
 import mongoose from 'mongoose';
 
 const {MONGO_URL} = enviroment;
@@ -32,7 +32,7 @@ export default class MongoSingleton {
 			name: 'MongoConnectionError',
 			cause: new Error('Failed to connect to MongoDB'),
 			message: 'Max retries reached. Failed to connect to MongoDB.',
-			code: EErrors.DATABASE_ERROR,
+			code: Errors.DATABASE_ERROR,
 		});
 	}
 

@@ -1,8 +1,8 @@
 import {Strategy as GitHubStrategy} from 'passport-github2';
 import {Strategy as LocalStrategy} from 'passport-local';
-import enviroment from './enviroment.config.js';
+import enviroment from './environment.js';
 import {initializeAuthService} from '../services/auth.service.js';
-import {logger} from './logger.config.js';
+import {logger} from './logger.js';
 import passport from 'passport';
 
 const {GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, GITHUB_CALLBACK_URL} = enviroment;
@@ -57,11 +57,9 @@ export default async function iniPassport() {
 	passport.use(
 		'github',
 		new GitHubStrategy(
-			{
-				clientID: GITHUB_CLIENT_ID,
+			{clientID: GITHUB_CLIENT_ID,
 				clientSecret: GITHUB_CLIENT_SECRET,
-				callbackURL: GITHUB_CALLBACK_URL,
-			},
+				callbackURL: GITHUB_CALLBACK_URL},
 			async (accessToken, _, profile, done) => {
 				try {
 					const user = await authService.githubAuth(accessToken, profile);
@@ -72,9 +70,9 @@ export default async function iniPassport() {
 						message: 'Error during GitHub authentication',
 					});
 				}
-			},
-		),
-	);
+			}
+		)
+	)
 
 	passport.serializeUser((user, done) => {
 		done(null, user._id);

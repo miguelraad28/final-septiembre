@@ -1,14 +1,9 @@
-import {
-	accountDeletionNoticeMailOptions,
-	passwordResetMailOptions,
-	transporter,
-} from '../config/nodemailer.config.js';
-import {createHash, isValidPassword} from '../config/bcrypt.config.js';
-
+import {accountDeletionNoticeMailOptions,passwordResetMailOptions,transporter,} from '../config/nodemailer.js';
+import {createHash, isValidPassword} from '../config/bcrypt.js';
 import {DAOFactory} from '../dao/factory.js';
 import crypto from 'crypto';
 import fetch from 'node-fetch';
-import {logger} from '../config/logger.config.js';
+import {logger} from '../config/logger.js';
 
 class AuthService {
 	async init() {

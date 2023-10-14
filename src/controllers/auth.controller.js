@@ -1,8 +1,8 @@
 import CustomError from '../services/errors/custom-error.js';
-import EErrors from '../services/errors/enums.js';
+import Errors from '../services/errors/enums.js';
 import {UserResponseDTO} from '../dto/user.dto.js';
 import {initializeAuthService} from '../services/auth.service.js';
-import {logger} from '../config/logger.config.js';
+import {logger} from '../config/logger.js';
 import passport from 'passport';
 import {uploadMiddleware} from '../middlewares/multer.middleware.js';
 
@@ -18,7 +18,7 @@ class AuthController {
 						name: 'RegistrationError',
 						cause: err,
 						message: 'Error during registration',
-						code: EErrors.USER_VALIDATION_ERROR,
+						code: Errors.USER_VALIDATION_ERROR,
 					}),
 				);
 			}
@@ -33,7 +33,7 @@ class AuthController {
 							name: 'LoginError',
 							cause: err,
 							message: 'Error logging in user after registration',
-							code: EErrors.AUTHENTICATION_ERROR,
+							code: Errors.AUTHENTICATION_ERROR,
 						}),
 					);
 				}
@@ -52,7 +52,7 @@ class AuthController {
 							name: 'AuthenticationError',
 							cause: err,
 							message: 'Error during authentication',
-							code: EErrors.AUTHENTICATION_ERROR,
+							code: Errors.AUTHENTICATION_ERROR,
 						}),
 					);
 				}
@@ -67,7 +67,7 @@ class AuthController {
 								name: 'LoginError',
 								cause: err,
 								message: 'Error logging in user',
-								code: EErrors.AUTHENTICATION_ERROR,
+								code: Errors.AUTHENTICATION_ERROR,
 							}),
 						);
 					}
@@ -96,7 +96,7 @@ class AuthController {
 					name: 'RenderLoginError',
 					cause: err,
 					message: 'Error rendering login form',
-					code: EErrors.UNAUTHORIZED_ACTION,
+					code: Errors.UNAUTHORIZED_ACTION,
 				}),
 			);
 		}
@@ -114,7 +114,7 @@ class AuthController {
 					name: 'RenderRegisterError',
 					cause: err,
 					message: 'Error rendering register form',
-					code: EErrors.UNAUTHORIZED_ACTION,
+					code: Errors.UNAUTHORIZED_ACTION,
 				}),
 			);
 		}
@@ -135,7 +135,7 @@ class AuthController {
 					name: 'RenderProfileError',
 					cause: err,
 					message: 'Error rendering profile',
-					code: EErrors.USER_NOT_FOUND,
+					code: Errors.USER_NOT_FOUND,
 				}),
 			);
 		}
@@ -151,7 +151,7 @@ class AuthController {
 					name: 'RenderAdminError',
 					cause: err,
 					message: 'Error rendering admin page',
-					code: EErrors.AUTHORIZATION_ERROR,
+					code: Errors.AUTHORIZATION_ERROR,
 				}),
 			);
 		}
@@ -167,7 +167,7 @@ class AuthController {
 								name: 'LogoutError',
 								cause: err,
 								message: 'Error during logout',
-								code: EErrors.AUTHENTICATION_ERROR,
+								code: Errors.AUTHENTICATION_ERROR,
 							}),
 						);
 					}
@@ -181,7 +181,7 @@ class AuthController {
 					name: 'LogoutError',
 					cause: err,
 					message: 'Error during logout',
-					code: EErrors.AUTHENTICATION_ERROR,
+					code: Errors.AUTHENTICATION_ERROR,
 				}),
 			);
 		}
@@ -202,7 +202,7 @@ class AuthController {
 					name: 'GetCurrentUserError',
 					cause: err,
 					message: 'Error getting current user',
-					code: EErrors.DATABASE_ERROR,
+					code: Errors.DATABASE_ERROR,
 				}),
 			);
 		}
@@ -219,7 +219,7 @@ class AuthController {
 					name: 'GitHubLoginError',
 					cause: err,
 					message: 'Error during GitHub login',
-					code: EErrors.AUTHENTICATION_ERROR,
+					code: Errors.AUTHENTICATION_ERROR,
 				}),
 			);
 		}
@@ -236,7 +236,7 @@ class AuthController {
 							name: 'GitHubAuthError',
 							cause: err,
 							message: 'Error during GitHub authentication',
-							code: EErrors.AUTHENTICATION_ERROR,
+							code: Errors.AUTHENTICATION_ERROR,
 						}),
 					);
 				}
@@ -251,7 +251,7 @@ class AuthController {
 								name: 'LoginError',
 								cause: err,
 								message: 'Error logging in user via GitHub',
-								code: EErrors.AUTHENTICATION_ERROR,
+								code: Errors.AUTHENTICATION_ERROR,
 							}),
 						);
 					}
@@ -276,7 +276,7 @@ class AuthController {
 					name: 'RenderForgotPasswordError',
 					cause: err,
 					message: 'Error rendering forgot password form',
-					code: EErrors.UNAUTHORIZED_ACTION,
+					code: Errors.UNAUTHORIZED_ACTION,
 				}),
 			);
 		}
@@ -293,7 +293,7 @@ class AuthController {
 					name: 'requestPasswordResetError',
 					cause: error,
 					message: 'Error requesting Password Reset',
-					code: EErrors.INTERNAL_SERVER_ERROR,
+					code: Errors.INTERNAL_SERVER_ERROR,
 				}),
 			);
 		}
@@ -318,7 +318,7 @@ class AuthController {
 					name: 'renderResetPasswordError',
 					cause: error,
 					message: 'Error rendering Reset Password',
-					code: EErrors.INTERNAL_SERVER_ERROR,
+					code: Errors.INTERNAL_SERVER_ERROR,
 				}),
 			);
 		}
@@ -354,7 +354,7 @@ class AuthController {
 					name: 'ToggleRoleError',
 					cause: error,
 					message: 'Error toggling user role',
-					code: EErrors.INTERNAL_SERVER_ERROR,
+					code: Errors.INTERNAL_SERVER_ERROR,
 				}),
 			);
 		}
@@ -396,7 +396,7 @@ class AuthController {
 					name: 'getAllUsersError',
 					cause: err,
 					message: 'Error getting All Users',
-					code: EErrors.INTERNAL_SERVER_ERROR,
+					code: Errors.INTERNAL_SERVER_ERROR,
 				}),
 			);
 		}
@@ -411,7 +411,7 @@ class AuthController {
 					name: 'cleanupInactiveUsersError',
 					cause: err,
 					message: 'Error cleaning Inactive Users',
-					code: EErrors.INTERNAL_SERVER_ERROR,
+					code: Errors.INTERNAL_SERVER_ERROR,
 				}),
 			);
 		}
@@ -426,7 +426,7 @@ class AuthController {
 					name: 'RenderAdminUsersError',
 					cause: err,
 					message: 'Error rendering admin users page',
-					code: EErrors.INTERNAL_SERVER_ERROR,
+					code: Errors.INTERNAL_SERVER_ERROR,
 				}),
 			);
 		}
@@ -443,7 +443,7 @@ class AuthController {
 					name: 'DeleteUserError',
 					cause: error,
 					message: 'Error deleting user',
-					code: EErrors.INTERNAL_SERVER_ERROR,
+					code: Errors.INTERNAL_SERVER_ERROR,
 				}),
 			);
 		}

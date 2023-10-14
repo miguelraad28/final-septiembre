@@ -1,4 +1,4 @@
-import enviroment from './enviroment.config.js';
+import enviroment from './environment.js';
 import nodemailer from 'nodemailer';
 
 const {GOOGLE_EMAIL, GOOGLE_PASS, PORT} = enviroment;
