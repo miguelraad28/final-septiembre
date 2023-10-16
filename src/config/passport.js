@@ -1,11 +1,11 @@
 import {Strategy as GitHubStrategy} from 'passport-github2';
 import {Strategy as LocalStrategy} from 'passport-local';
-import enviroment from './environment.js';
+import env from './environment.js';
 import {initializeAuthService} from '../services/auth.service.js';
 import {logger} from './logger.js';
 import passport from 'passport';
 
-const {GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, GITHUB_CALLBACK_URL} = enviroment;
+const {GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, GITHUB_CALLBACK_URL} = env;
 export default async function iniPassport() {
 	const authService = await initializeAuthService();
 	passport.use(

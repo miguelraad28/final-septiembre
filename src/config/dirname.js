@@ -1,19 +1,17 @@
-import {fileURLToPath} from 'url';
-import fs from 'fs';
-import path from 'path';
+import { fileURLToPath } from 'url'
+import fs from 'fs'
+import path from 'path'
 
-const __filename = fileURLToPath(import.meta.url);
-const __configDirname = path.dirname(__filename);
+const fileName = fileURLToPath(import.meta.url)
+const configDirname = path.dirname(fileName)
+const rootDirectory = path.resolve(configDirname, '../')
 
-const rootDirectory = path.resolve(__configDirname, '../');
+export { configDirname, rootDirectory }
 
-export {__configDirname, rootDirectory};
+export const isMainModule = path.resolve(process.argv[1]) === path.resolve(`${rootDirectory}/app.js`)
 
-export const isMainModule =
-	path.resolve(process.argv[1]) === path.resolve(`${rootDirectory}/app.js`);
-
-export const confirmDirectoryExists = (dirPath) => {
-	if (!fs.existsSync(dirPath)) {
-		fs.mkdirSync(dirPath, {recursive: true});
-	}
-};
+export const ensureDirExists = dirPath => {
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath, { recursive: true })
+  }
+}

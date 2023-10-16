@@ -1,12 +1,12 @@
 import MongoSingleton from '../config/mongo.js';
-import enviroment from '../config/environment.js';
+import env from '../config/environment.js';
 
 export let isMongoConnected = false;
 
 export const DAOFactory = async entity => {
 	let DAO;
-    console.log("------------------------------------------------------------------------------" + enviroment.PERSISTANCE)
-	switch (enviroment.PERSISTANCE) {
+    console.log("--" + env.PERSISTANCE + "--")
+	switch (env.PERSISTANCE) {
 		case 'MONGO':
 			await MongoSingleton.getInstance();
 

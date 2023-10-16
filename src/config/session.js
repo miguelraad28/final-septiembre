@@ -1,10 +1,10 @@
 import MongoSingleton from './mongo.js';
 import MongoStore from 'connect-mongo';
-import enviroment from './environment.js';
+import env from './environment.js';
 import {logger} from './logger.js';
 import session from 'express-session';
 
-const {MONGO_URL, SESSION_SECRET} = enviroment;
+const {MONGO_URL, SESSION_SECRET} = env;
 export const configureSession = () => {
 	if (MongoSingleton.hasInstance()) {
 		logger.debug('MongoDB instance is available');

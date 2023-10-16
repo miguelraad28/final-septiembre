@@ -1,7 +1,7 @@
-import enviroment from './environment.js';
+import env from './environment.js';
 import nodemailer from 'nodemailer';
 
-const {GOOGLE_EMAIL, GOOGLE_PASS, PORT} = enviroment;
+const {GOOGLE_EMAIL, GOOGLE_PASS, PORT} = env;
 
 export const transporter = nodemailer.createTransport({
 	service: 'gmail',

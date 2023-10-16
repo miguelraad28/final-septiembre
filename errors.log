@@ -1,0 +1,10 @@
+2023-10-14 17:12:39 error: Failed to start server: ReferenceError: rootDir is not defined
+2023-10-14 17:12:53 error: Failed to start server: ReferenceError: rootDir is not defined
+2023-10-14 17:13:04 error: Failed to start server: ReferenceError: loggerRouter is not defined
+2023-10-14 17:14:13 error: Failed to start server: ReferenceError: swaggerUiExpress is not defined
+2023-10-14 17:14:22 error: Failed to start server: ReferenceError: initializeCartsRoutes is not defined
+2023-10-14 17:14:25 error: Failed to start server: ReferenceError: initializeCartsRoutes is not defined
+2023-10-14 17:14:31 error: Failed to start server: ReferenceError: routerCarts is not defined
+2023-10-14 17:14:41 error: Failed to start server: ReferenceError: mockRouter is not defined
+2023-10-14 17:14:48 error: Failed to start server: ReferenceError: errorRouter is not defined
+2023-10-14 17:15:01 error: Failed to start server: ReferenceError: errorHandler is not defined
