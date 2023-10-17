@@ -1,14 +1,14 @@
 import CustomError from '../services/errors/custom-error.js';
 import Errors from '../services/errors/enums.js';
 import {UserResponseDTO} from '../dto/user.dto.js';
-import {initializeAuthService} from '../services/auth.service.js';
+import {initializeAuthenticationService} from '../services/auth.service.js';
 import {logger} from '../config/logger.js';
 import passport from 'passport';
 import {uploadMiddleware} from '../middlewares/multer.middleware.js';
 
 class AuthController {
 	init = async () => {
-		this.authService = await initializeAuthService();
+		this.authService = await initializeAuthenticationService();
 	};
 	registerUser = async (req, res, next) => {
 		passport.authenticate('register', (err, user, info) => {

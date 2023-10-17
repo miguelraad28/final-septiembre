@@ -207,7 +207,7 @@ class AuthService {
 
 let authService;
 
-export const initializeAuthService = async () => {
+export const initializeAuthenticationService = async () => {
 	if (!authService) {
 		authService = new AuthService();
 		await authService.init();

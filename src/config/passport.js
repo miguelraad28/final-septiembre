@@ -1,30 +1,30 @@
-import {Strategy as GitHubStrategy} from 'passport-github2';
-import {Strategy as LocalStrategy} from 'passport-local';
-import env from './environment.js';
-import {initializeAuthService} from '../services/auth.service.js';
-import {logger} from './logger.js';
-import passport from 'passport';
+import {Strategy as GitHubStrategy} from 'passport-github2'
+import {Strategy as LocalStrategy} from 'passport-local'
+import env from './environment.js'
+import {initializeAuthenticationService} from '../services/auth.service.js'
+import {logger} from './logger.js'
+import passport from 'passport'
 
-const {GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, GITHUB_CALLBACK_URL} = env;
+const {GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, GITHUB_CALLBACK_URL} = env
 export default async function iniPassport() {
-	const authService = await initializeAuthService();
+	const authService = await initializeAuthenticationService()
 	passport.use(
 		'login',
 		new LocalStrategy(
 			{usernameField: 'email'},
 			async (username, password, done) => {
-				logger.debug(`Attempting to authenticate user: ${username}`);
+				logger.debug(`Attempting to authenticate user: ${username}`)
 				try {
-					const user = await authService.loginUser(username, password);
-					logger.info(`User ${username} authenticated successfully`);
-					return done(null, user);
+					const user = await authService.loginUser(username, password)
+					logger.info(`User ${username} successfully authenticated`)
+					return done(null, user)
 				} catch (err) {
-					logger.error(`Authentication failed for user ${username}`);
-					return done(null, false, {message: 'Invalid credentials'});
+					logger.error('Authentication attempt failed')
+					return done(null, false, {message: 'Invalid login credentials'})
 				}
 			},
 		),
-	);
+	)
 
 	passport.use(
 		'register',
@@ -47,7 +47,7 @@ export default async function iniPassport() {
 					const userCreated = await authService.registerUser(user);
 					return done(null, userCreated);
 				} catch (err) {
-					return done(null, false, {message: 'Error during registration'});
+					return done(null, false, {message: 'Registration unsuccessful'});
 				}
 			},
 		),
@@ -83,7 +83,7 @@ export default async function iniPassport() {
 			let user = await authService.findUserById(id);
 			done(null, user);
 		} catch (err) {
-			logger.error(`Deserialization failed for user ID ${id}`);
+			logger.error(`Deserialization failed -ID:${id}`);
 			return done(null, false, {
 				message: 'Error during user deserialization',
 			});
