@@ -1,11 +1,11 @@
 {
   "type": "module",
-  "name": "backend-coderhouse",
+  "name": "Proyecto Final",
   "version": "1.0.0",
   "main": "src/main.js",
   "scripts": {
-    "start:prod": "node .",
-    "start:dev": "nodemon -e 'js.handlebars.html'.",
+    "start:dev": "nodemon .",
+    "start": "node .",
     "test": "nodemon -e 'js.handlebars.html' test/test.js"
   },
   "keywords": [],
@@ -20,7 +20,7 @@
     "express-handlebars": "^7.0.2",
     "express-session": "^1.17.3",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.0.2",
+    "mongoose": "^7.4.0",
     "mongoose-paginate-v2": "^1.7.1",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.2",
