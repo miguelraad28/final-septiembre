@@ -1,0 +1,14 @@
+{{!-- <h1>cargar imagenes <h1>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input id="uidInput" type="hidden" name="uid" value="{{uid}}">
+            <input id="fileInput" type="file">
+            <button id="btnForm">Registrar</button>
+        </form>
+    <script src="/js/upload.js"></script> --}}
+
+    <form action="/api/users/{{uid}}/documents" method="POST" enctype="multipart/form-data">
+  <!-- Otros campos del formulario -->
+  <input type="hidden" name="type" value="profile">
+  <input type="file" name="image">
+  <button type="submit">upload</button>
+</form>

@@ -52,9 +52,11 @@ export async function putRolUserController(req,res,next){
 
 export async function postMulterUserController(req, res, next) {
     try {
-        //aca hacer todo lo de multer
-        await userService.create(req.body);
-        res.sendStatus(201);
+        const uid = req.params.uid
+        const filter = {_id: uid}
+        const updatedData = {documents: [{name: req.file.filename, reference: req.file.path}]}
+        await userRepository.update(filter, updatedData)
+        res.redirect('/products')
     } catch (error) {
         req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`)
         next(error);

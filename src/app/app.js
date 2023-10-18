@@ -4,7 +4,7 @@ import { engine } from 'express-handlebars'
 import { Server } from 'socket.io'
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
-//import multerMiddleware from './multerMiddleware.js';
+
 
 
 import { PORT } from '../config/servidor.js'
@@ -17,9 +17,9 @@ import { passportInitialize, passportSession } from '../middlewares/passport.js'
 import { EmptyFieldError, ForbiddenError, InvalidArgumentError, InvalidFormatError, InvalidIntegerError, InvalidLengthError, InvalidNumberError, InvalidStringError, NotFoundError, UnauthorizedError, UserExistsError } from '../errors/errors.js'
 import { winstonLogger } from '../utils/logger.js'
 import { logger } from '../middlewares/logger.js'
+import { multerMiddleware } from '../middlewares/multer.js'
 
 export const app = express()
-
 
 
 app.engine('handlebars', engine())
@@ -27,11 +27,9 @@ app.set('views', './views')
 app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 
-// app.use(multerMiddleware.fields([
-//     { name: 'profileImage', maxCount: 1 },
-//     { name: 'productImage', maxCount: 1 },
-//     { name: 'document', maxCount: 5 }
-// ]));
+app.use(express.urlencoded({ extended: true }))
+app.use(multerMiddleware.single("image"))
+
 
 app.use(session({
     store: MongoStore.create({
@@ -69,11 +67,11 @@ app.use((error, req, res, next) => {
         res.status(error.statusCode).json({ error: error.message })
     } else if (error instanceof InvalidFormatError) {
         res.status(error.statusCode).json({ error: error.message })
-    }  else if (error instanceof InvalidLengthError) {
+    } else if (error instanceof InvalidLengthError) {
         res.status(error.statusCode).json({ error: error.message })
     } else if (error instanceof UserExistsError) {
         res.status(error.statusCode).json({ error: error.message })
-    }else {
+    } else {
         res.status(500).json({ error: 'Error interno del servidor' })
     }
 })
@@ -87,7 +85,7 @@ app.use('/', webRouter)
 await mongoose.connect(MONGODB_CNX_STR)
 
 
-const servidor = app.listen(PORT, '0.0.0.0', () => { 
+const servidor = app.listen(PORT, '0.0.0.0', () => {
     winstonLogger.info(`escuchando en ${servidor.address().port}`)
 })
 

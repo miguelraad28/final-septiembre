@@ -3,6 +3,7 @@ import { cartRouter } from './cart.router.js'
 import { productosRouter } from './productos.router.js'
 import { auth } from '../../middlewares/auth.js'
 import { chatController } from '../../controllers/web/chatController.js'
+import { autenticacion } from '../../middlewares/autenticacion.js'
 
 
 export const webRouter = Router()
@@ -37,6 +38,11 @@ webRouter.get('/restablecer', (req, res) =>{
 
 webRouter.get('/token/:token', (req, res) =>{
     res.render('token', {title: "Restablecer", token: req.params.token})
+})
+
+webRouter.get('/premium',autenticacion, (req, res) =>{
+    const uid = req.user._id
+    res.render('upload', {uid})
 })
 
 
