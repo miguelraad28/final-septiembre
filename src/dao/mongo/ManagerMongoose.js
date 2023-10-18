@@ -12,37 +12,45 @@ export class ManagerMongoose {
         return await this.collection.create(record);
     }
 
+
     // async read(filter = {}) {
     //     if (typeof filter === 'object' && !Array.isArray(filter)) {
     //         const result = await this.collection.findOne(filter).lean();
-    //         result._id = result._id.toString()
-    //         return result
+    //         if (result) {
+    //             result._id = result._id.toString();
+    //             return result;
+    //         } else {
+    //             return []
+    //         }
     //     } else {
     //         const results = await this.collection.find(filter).lean();
     //         return results.map(result => {
-    //             result._id = result._id.toString()
-    //             return result
-    //         })
+    //             result._id = result._id.toString();
+    //             return result;
+    //         });
     //     }
     // }
 
     async read(filter = {}) {
-        if (typeof filter === 'object' && !Array.isArray(filter)) {
+        if (Object.keys(filter).length === 0 && filter.constructor === Object) {
+            const results = await this.collection.find({}).lean();
+            return results.map(result => {
+                result._id = result._id.toString();
+                return result;
+            });
+        } else {
             const result = await this.collection.findOne(filter).lean();
             if (result) {
                 result._id = result._id.toString();
                 return result;
             } else {
-                return []
+                return [];
             }
-        } else {
-            const results = await this.collection.find(filter).lean();
-            return results.map(result => {
-                result._id = result._id.toString();
-                return result;
-            });
         }
     }
+
+
+
 
     async readAndPopulate(filter = {}) {
         if (typeof filter === 'object' && !Array.isArray(filter)) {

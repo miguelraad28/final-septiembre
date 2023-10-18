@@ -28,8 +28,8 @@ app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 
 app.use(express.urlencoded({ extended: true }))
-app.use(multerMiddleware.single("image"))
-
+//app.use(multerMiddleware.single("image"))
+//app.use(multerMiddleware.array("image"))
 
 app.use(session({
     store: MongoStore.create({

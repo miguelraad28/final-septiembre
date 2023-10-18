@@ -42,6 +42,7 @@ webRouter.get('/token/:token', (req, res) =>{
 
 webRouter.get('/premium',autenticacion, (req, res) =>{
     const uid = req.user._id
+    console.log(uid)
     res.render('upload', {uid})
 })
 

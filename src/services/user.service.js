@@ -63,6 +63,108 @@ class UserService {
     const objToken = new Token(filter, {token: token})
     tokenRepository.createToken(objToken)
   }
+
+  // async documentsUpdate(filter, files){
+  //   const documents = []
+  //       if(files["identificacion"]){
+  //           documents.push({
+  //           documento: "identificacion",
+  //           name: files["identificacion"][0].filename,
+  //           reference: files["identificacion"][0].path
+  //           })
+  //       }
+  //       if(files["domicilio"]){
+  //           documents.push({
+  //               documento: "domicilio",
+  //               name: files["domicilio"][0].filename,
+  //               reference: files["domicilio"][0].path
+  //           })
+  //       }
+  //       if(files["estadoDeCuenta"]){
+  //           documents.push({
+  //               documento: "estadoDeCuenta",
+  //               name: files["estadoDeCuenta"][0].filename,
+  //               reference: files["estadoDeCuenta"][0].path
+  //           })
+  //       }
+  // }
+
+  // async documentsUpdate(filter, files) {
+  //   const documents = [];
+
+  //   if (files["identificacion"]) {
+  //     documents.push({
+  //       documento: "identificacion",
+  //       name: files["identificacion"][0].filename,
+  //       reference: files["identificacion"][0].path
+  //     });
+  //   }
+  //   if (files["domicilio"]) {
+  //     documents.push({
+  //       documento: "domicilio",
+  //       name: files["domicilio"][0].filename,
+  //       reference: files["domicilio"][0].path
+  //     });
+  //   }
+  //   if (files["estadoDeCuenta"]) {
+  //     documents.push({
+  //       documento: "estadoDeCuenta",
+  //       name: files["estadoDeCuenta"][0].filename,
+  //       reference: files["estadoDeCuenta"][0].path
+  //     });
+  //   }
+
+  //   // Agregar los documentos a la propiedad "documents" usando la función "update"
+  //   if (documents.length > 0) {
+  //     // Si hay al menos un documento, actualiza la propiedad "documents" con los nuevos objetos
+  //     const updateFilter = { _id: filter._id }; // Reemplaza '_id' por el campo que identifica al usuario
+  //     const updatedData = { $push: { documents: { $each: documents } } };
+  //     await userRepository.update(updateFilter, updatedData);
+  //   }
+  // }
+
+  async documentsUpdate(filter, files) {
+    const documentsToAdd = [];
+
+    if (files["identificacion"]) {
+      documentsToAdd.push({
+        documento: "identificacion",
+        name: files["identificacion"][0].filename,
+        reference: files["identificacion"][0].path
+      });
+    }
+    if (files["domicilio"]) {
+      documentsToAdd.push({
+        documento: "domicilio",
+        name: files["domicilio"][0].filename,
+        reference: files["domicilio"][0].path
+      });
+    }
+    if (files["estadoDeCuenta"]) {
+      documentsToAdd.push({
+        documento: "estadoDeCuenta",
+        name: files["estadoDeCuenta"][0].filename,
+        reference: files["estadoDeCuenta"][0].path
+      });
+    }
+
+    // Realizar una consulta para obtener el número actual de documentos en "documents"
+    const user = await userRepository.readDTO(filter);
+    const currentDocumentCount = user.documents.length;
+
+    // Agregar los documentos a la propiedad "documents" usando la función "update"
+    if (documentsToAdd.length > 0) {
+      const updatedData = { $push: { documents: { $each: documentsToAdd } } };
+      await userRepository.update(filter, updatedData);
+
+      // Verificar si la cantidad total de "documents" es 3 y cambiar "status" a true si es el caso
+      const totalDocumentCount = currentDocumentCount + documentsToAdd.length;
+      if (totalDocumentCount === 3) {
+        const updateStatusData = { $set: { status: true } };
+        await userRepository.update(filter, updateStatusData);
+      }
+    }
+  }
 }
 
 export const userService = new UserService()

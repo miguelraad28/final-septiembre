@@ -14,7 +14,8 @@ export async function postUserController(req, res, next) {
 
 export async function getUsersController(req, res, next) {
     try {
-        const users = await userRepository.find({})
+        const users = await userRepository.readDTO({})
+        console.log(users)
         res.status(200).json(users)
     } catch (error) {
         req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`)
@@ -54,9 +55,8 @@ export async function postMulterUserController(req, res, next) {
     try {
         const uid = req.params.uid
         const filter = {_id: uid}
-        const updatedData = {documents: [{name: req.file.filename, reference: req.file.path}]}
-        await userRepository.update(filter, updatedData)
-        res.redirect('/products')
+        await userService.documentsUpdate(filter, req.files)
+        res.sendStatus(200)
     } catch (error) {
         req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`)
         next(error);

@@ -10,6 +10,7 @@ export default class User{
         this.cart = user.cart,
         this.rol = user.rol,
         this.documents = [],
-        this.last_connection = new Date()
+        this.last_connection = new Date(),
+        this.status = false
     }
 }

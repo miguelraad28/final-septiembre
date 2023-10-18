@@ -20,13 +20,4 @@ const storage = multer.diskStorage({
 
 export const multerMiddleware = multer({ 
   storage, 
-  fileFilter:(req, file, cb) =>{ 
-    const fileTypes = /jpeg|jpg|png/
-    const mimetype = fileTypes.test(file.mimetype)
-    const extName = fileTypes.test(path.extname(file.originalname))
-    if(mimetype && extName){
-      return cb(null, true)
-    }
-    cb("ERROR, el archivo debe ser una imagen válida")
-  }
 })

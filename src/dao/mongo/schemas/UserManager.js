@@ -9,6 +9,10 @@ export const userManagerMongo = new ManagerMongoose('users', {
     cart: String,
     rol: String,
     documents: [{
+        documento:{
+            type: String,
+            required: true
+        },
         name: {
             type: String,
             required: true
@@ -18,5 +22,6 @@ export const userManagerMongo = new ManagerMongoose('users', {
             required: true
         }
     }],
-    last_connection : {type: Date}
+    last_connection : {type: Date},
+    status: Boolean
 })
