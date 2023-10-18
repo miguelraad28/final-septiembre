@@ -1,0 +1,60 @@
+<h1>Bienvenido {{user}} !</h1>
+<p>Rol : {{rol}}</p>
+
+<h1>Productos</h1>
+
+{{#if hayProductos}}
+    {{#if esUser}}
+        {{#each productos.docs}}
+            <div class="card border-dark mb-3" style="max-width: 20rem;">
+                <div class="card-header">{{this._id}}</div>
+                <div class="card-body">
+                    <h4 class="card-title">{{this.title}}</h4>
+                    <h4 class="card-title">{{this.price}}</h4>
+                    <p class="card-text">{{this.description}}</p>
+                    <p class="card-text">SKU : {{this.code}}</p>
+                    <p class="card-text">stock : {{this.stock}}</p>
+                    <button class="btnAgregarAlCarrito" data-product-id="{{this._id}}">Agregar al carrito</button>
+                    <p id="p{{this._id}}"></p>
+                </div>
+            </div>
+        {{/each}}
+    {{else if esAdmin }}
+        {{#each productos.docs}}
+            <div class="card border-dark mb-3" style="max-width: 20rem;">
+                <div class="card-header">{{this._id}}</div>
+                <div class="card-body">
+                    <h4 class="card-title">{{this.title}}</h4>
+                    <h4 class="card-title">{{this.price}}</h4>
+                    <p class="card-text">{{this.description}}</p>
+                    <p class="card-text">SKU : {{this.code}}</p>
+                    <p class="card-text">stock : {{this.stock}}</p>
+                    <button class="btnEditar" data-product-id="{{this._id}}">Editar</button>
+                    <button class="btnDelete" data-product-id="{{this._id}}">Eliminar</button>
+                </div>
+            </div>
+        {{/each}}
+    {{/if}}
+
+    {{#if productos.hasPrevPage}}
+        <a href="/products?page={{productos.prevPage}}&{{query}}">Anterior</a>
+    {{/if}}
+
+    {{#if productos.hasNextPage}}
+        <a href="/products?page={{productos.nextPage}}&{{query}}">Siguiente</a>
+    {{/if}}
+
+{{else}}
+    <h2>no hay productos</h2>
+{{/if}}
+
+
+
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+<script src="/js/agregarAlCarrito.js"></script>
+<script src="/js/editarProducto.js"></script>
+

@@ -1,0 +1,14 @@
+<h1>Chat</h1>
+
+<h4>Enviar mensaje</h4>
+alias: <input  id="inputAlias" type="text">
+mensaje: <input id="inputMensaje" type="text">
+<button id="btnNuevoMsg">Enviar</button>
+<button id="btnBorrarMsg">Borrar todos los mensajes</button>
+
+
+<h4>Historial</h4>
+<div id="messages"></div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+<script src="/js/chat.js"></script>

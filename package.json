@@ -1,34 +1,34 @@
 {
-  "name": "final-septiembre",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/app.js",
   "type": "module",
+  "name": "backend-coderhouse",
+  "version": "1.0.0",
+  "main": "src/main.js",
   "scripts": {
-    "start": "node ./src/app.js PROD",
-    "dev": "nodemon ./src/app.js DEV",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:prod": "node .",
+    "start:dev": "nodemon -e 'js.handlebars.html'.",
+    "test": "nodemon -e 'js.handlebars.html' test/test.js"
   },
-  "author": "Miguel Raad",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.1.1",
+    "@faker-js/faker": "^8.0.1",
+    "bcrypt": "5.0.1",
     "connect-mongo": "^5.0.0",
-    "cookie-parser": "^1.4.6",
-    "dotenv": "^16.3.1",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "express-compression": "^1.0.2",
-    "express-handlebars": "^7.1.2",
+    "express-handlebars": "^7.0.2",
     "express-session": "^1.17.3",
-    "mongoose": "^7.5.1",
-    "mongoose-paginate-v2": "^1.7.31",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.2",
+    "mongoose-paginate-v2": "^1.7.1",
     "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.9.5",
-    "nodemon": "^3.0.1",
+    "nodemailer": "^6.9.2",
     "passport": "^0.6.0",
     "passport-github2": "^0.1.12",
     "passport-local": "^1.0.0",
-    "url": "^0.11.2",
-    "winston": "^3.10.0"
-  }
+    "socket.io": "^4.6.1",
+    "winston": "^3.8.2"
+  },
+  "description": ""
 }

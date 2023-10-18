@@ -1,0 +1,12 @@
+<h1>Editar producto</h1>
+    <form id="editProductForm">
+        <label for="titleInput">title</label> <input id="titleInput" type="text" value="{{product.title}}"> <br>
+        <label for="descriptionInput">description</label> <input id="descriptionInput" type="text" value="{{product.description}}"><br>
+        <label for="priceInput">price</label> <input id="priceInput" type="number" value="{{product.price}}"><br>
+        <label for="thumbnailInput">thumbnail</label> <input id="thumbnailInput" type="text" value="{{product.thumbnail}}"><br>
+        <label for="codeInput">code</label> <input id="codeInput" type="text" value="{{product.code}}"><br>
+        <label for="stockInput">stock</label> <input id="stockInput" type="number" value="{{product.stock}}"><br>
+        <button id="btnPutEditedProduct" data-product-id="{{product._id}}">Editar</button>
+    </form>
+
+    <script src="/js/editarProducto.js"></script>

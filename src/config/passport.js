@@ -1,93 +1,11 @@
-import {Strategy as GitHubStrategy} from 'passport-github2'
-import {Strategy as LocalStrategy} from 'passport-local'
-import env from './environment.js'
-import {initializeAuthService} from '../services/auth.service.js'
-import {winstonLogger} from './logger.js'
-import passport from 'passport'
+import dotenv from 'dotenv';
+dotenv.config();
 
-const {GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, GITHUB_CALLBACK_URL} = env
-export default async function iniPassport() {
-	const authService = await initializeAuthService()
-	passport.use(
-		'login',
-		new LocalStrategy(
-			{usernameField: 'email'},
-			async (username, password, done) => {
-				winstonLogger.debug(`Attempting to authenticate user: ${username}`)
-				try {
-					const user = await authService.loginUser(username, password)
-					winstonLogger.info(`User ${username} successfully authenticated`)
-					return done(null, user);
-				} catch (err) {
-					winstonLogger.error(`Authentication attempt failed`)
-					return done(null, false, {message: 'Invalid login credentials'})
-				}
-			},
-		),
-	)
+export const githubCallbackUrl = process.env.GITHUBCALLBACKURL
+export const githubClientId = process.env.GITHUBCLIENTEID
+export const githubClientSecret = process.env.GITHUBCLIENTSECRET
 
-	passport.use(
-		'register',
-		new LocalStrategy(
-			{
-				passReqToCallback: true,
-				usernameField: 'email',
-			},
-			async (req, username, password, done) => {
-				try {
-					const {first_name, last_name, age} = req.body;
-					const user = {
-						email: username,
-						first_name,
-						last_name,
-						age,
-						role: 'user',
-						password,
-					};
-					const userCreated = await authService.registerUser(user);
-					return done(null, userCreated);
-				} catch (err) {
-					return done(null, false, {message: 'Registration unsuccessful'})
-				}
-			},
-		),
-	)
+export const adminEmail = process.env.ADMIN_EMAIL
+export const adminPassword = process.env.ADMIN_PASSWORD
 
-	passport.use(
-		'github',
-		new GitHubStrategy(
-			{
-				clientID: GITHUB_CLIENT_ID,
-				clientSecret: GITHUB_CLIENT_SECRET,
-				callbackURL: GITHUB_CALLBACK_URL,
-			},
-			async (accessToken, _, profile, done) => {
-				try {
-					const user = await authService.githubAuth(accessToken, profile)
-					return done(null, user);
-				} catch (err) {
-					winstonLogger.error('Error during GitHub authentication:', err)
-					return done(null, false, {
-						message: 'Error during GitHub authentication',
-					});
-				}
-			},
-		),
-	)
 
-	passport.serializeUser((user, done) => {
-		done(null, user._id)
-	})
-
-	passport.deserializeUser(async (id, done) => {
-		try {
-			let user = await authService.findUserById(id);
-			done(null, user)
-		} catch (err) {
-			logger.error(`Deserialization failed for user ID ${id}`);
-			return done(null, false, {
-				message: 'Error during user deserialization',
-			})
-		}
-	})
-}

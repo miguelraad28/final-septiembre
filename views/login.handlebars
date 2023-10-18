@@ -1,0 +1,17 @@
+
+{{#if loggedIn }}
+    <h1>sesión ya iniciada</h1>
+{{else}}
+    <h1>Login</h1>
+        <form id="loginForm">
+            <label for="emailInput">Email</label> <input id="emailInput" type="email">
+            <label for="passwordInput">Contraseña</label> <input id="passwordInput" type="password">
+            <button id="btnForm">Login</button>
+        </form>
+    <p>¿No estás registrado? <a href="/register">Regístrate aquí</a></p>
+    <p>¿Olvidaste tu contraseña? <a href="/restablecer">Restablecer contraseña</a></p>
+    <a href="/api/sessions/github">
+        <button>Entrar con Github</button>
+    </a>
+    <script src="/js/login.js"></script>
+{{/if}}
