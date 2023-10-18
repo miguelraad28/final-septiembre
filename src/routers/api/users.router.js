@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { getUsersController, postMulterUserController, postUserController, putPasswordUsersController } from '../../controllers/api/users.controllers.js'
+import { deleteUserController, getUsersController, postMulterUserController, postUserController, putPasswordUsersController, putRolUserController } from '../../controllers/api/users.controllers.js'
 import { multerMiddleware } from '../../middlewares/multer.js'
 
 export const usersRouter = Router()
@@ -7,7 +7,8 @@ export const usersRouter = Router()
 usersRouter.get('/', getUsersController)
 usersRouter.post('/', postUserController)
 usersRouter.put('/:token', putPasswordUsersController)
-usersRouter.put('/premium/:uid', )
+//usersRouter.put('/premium/:uid', putRolUserController)
+usersRouter.get('/premium/:uid', putRolUserController)
 
 usersRouter.post('/:uid/documents', 
 multerMiddleware.fields([
@@ -16,3 +17,5 @@ multerMiddleware.fields([
   { name: 'estadoDeCuenta', maxCount: 1 },
 ]),
 postMulterUserController)
+
+usersRouter.delete('/', deleteUserController)

@@ -38,6 +38,9 @@ export default class UserRepository{
     async update(filter, updatedData){
         return await this.persistence.update(filter, updatedData)
     }
+    async delete(filter){
+        return await this.persistence.delete()
+    }
 }
 
 

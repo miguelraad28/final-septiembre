@@ -165,6 +165,34 @@ class UserService {
       }
     }
   }
+
+  async rolUpdate(filter, updatedData){
+    const user = await userRepository.readDTO(filter)
+    if((updatedData.rol === "premium" && user.status)||
+        (updatedData.rol === "user")){
+          return await userRepository.update(filter, updatedData)
+        }
+    //TODO ERROR
+    console.log("devolver un error indicando que el usuario no ha terminado de procesar su documentación.")
+  }
+
+  async deletetwoDaysAgo(){
+    const twoDaysAgo = new Date()
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2)
+    const filter = { last_connection: { $lt: twoDaysAgo } }
+    try {
+      const users = await userRepository.read(filter)
+      for (const user of users){
+      const mensaje = `<p>Hola ${user.email}, tu usuario ha sido eliminado por inactividad</p>`
+      await mailer.send(user.email, "Usuario borrado", mensaje )
+      }
+      const deletedUsers = await userRepository.delete(filter);
+      console.log(`${deletedUsers} usuarios eliminados.`);
+    } catch (error) {
+      //hacer error
+      console.error('Error al eliminar usuarios:', error);
+    }
+  }
 }
 
 export const userService = new UserService()
