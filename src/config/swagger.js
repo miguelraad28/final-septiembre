@@ -5,10 +5,10 @@ const swaggerOptions = {
 	definition: {
 		openapi: '1.0.0',
 		info: {
-			title: 'DOCS',
+			title: 'E-commerce DOCS',
 			description: "This is the final project for a Coderhouse backend course.",
 		},
 	},
 	apis: [`${rootDirectory}/docs/**/*.yaml`],
-};
+}
 export const specs = swaggerJSDoc(swaggerOptions)

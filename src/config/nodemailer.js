@@ -1,37 +1,34 @@
-import env from './environment.js';
-import nodemailer from 'nodemailer';
+import env from './environment.js'
+import nodemailer from 'nodemailer'
 
-const {GOOGLE_EMAIL, GOOGLE_PASS, PORT} = env;
+const {GOOGLE_EMAIL, GOOGLE_PASS, PORT} = env
 
 export const transporter = nodemailer.createTransport({
 	service: 'gmail',
 	port: 587,
-	auth: {
-		user: GOOGLE_EMAIL,
-		pass: GOOGLE_PASS,
-	},
-});
+	auth: {user: GOOGLE_EMAIL, pass: GOOGLE_PASS,}
+})
 
-export const passwordResetMailOptions = (email, token) => ({
+export const sendEmailToResetPass = (email, token) => ({
 	from: GOOGLE_EMAIL,
 	to: email,
 	subject: 'Password Reset',
-	html: `<html>
+    html: `<html>
     <head>
-        <title>Reset Password</title>
+        <title>Password Reset</title>
     </head>
     <body>
-        <h1>Hello,</h1>
-        <p>You are receiving this email because you (or someone else) have requested the reset of the password for your account.</p>
-        <p>Please click on the following link, or paste it into your browser to complete the process:</p>
+        <h1>Hi there,</h1>
+        <p>This email is sent to you because you have requested a password reset for your account.</p>
+        <p>To complete the process, please click on the following link or copy and paste it into your web browser:</p>
         <a href="http://localhost:${PORT}/api/users/reset-password?token=${token}&email=${email}">Reset Password</a>
         <p>This link will expire in one hour.</p>
-        <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
+        <p>If you did not make this request, please disregard this email, and your password will remain unchanged.</p>
     </body>
-    </html>`,
-});
+    </html>`
+})
 
-export const accountDeletionNoticeMailOptions = user => ({
+export const sendEmailDeletedAccount = user => ({
 	from: GOOGLE_EMAIL,
 	to: user.email,
 	subject: 'Account Deletion Notice',
@@ -40,25 +37,25 @@ export const accountDeletionNoticeMailOptions = user => ({
         <title>Account Deletion</title>
     </head>
     <body>
-        <h1>Hello ${user.first_name},</h1>
-        <p>Your account has been deleted due to inactivity.</p>
-        <p>If you wish to use our services again, you'll need to re-register.</p>
+        <h1>Hi ${user.first_name},</h1>
+        <p>Your account has been removed due to prolonged inactivity.</p>
+        <p>If you'd like to resume using our services, you'll need to register again.</p>
     </body>
-    </html>`,
-});
+    </html>`
+})
 
-export const productDeletionNoticeMailOptions = (user, id) => ({
+export const sendEmailProductDeleted = (user, id) => ({
 	from: GOOGLE_EMAIL,
 	to: user.email,
 	subject: 'Product Deletion Notice',
-	html: `<html>
+    html: `<html>
     <head>
         <title>Product Deletion</title>
     </head>
     <body>
-        <h1>Hello ${user.first_name},</h1>
-        <p>Your product with id ${id} has been deleted.</p>
-        <p>If this is an error, please contact support.</p>
+        <h1>Hi ${user.first_name},</h1>
+        <p>We regret to inform you that one of your products has been deleted.</p>
+        <p>If this is an error, please contact support with the relevant details.</p>
     </body>
-    </html>`,
-});
+    </html>`
+})

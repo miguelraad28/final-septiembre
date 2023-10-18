@@ -9,7 +9,9 @@ if (!['development', 'production'].includes(EXECUTIONMODE)) {
 	process.exit()
 }
 
-dotenv.config({ path: process.argv[2] === 'development' ? './.env.DEV' : './.env.PROD'})
+dotenv.config({
+	path: process.argv[2] === 'development' ? './.env.DEV' : './.env.PROD',
+})
 
 env.PORT = process.env.PORT
 env.GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID
