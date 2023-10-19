@@ -39,7 +39,8 @@ export async function productsGetController(req, res, next) {
             hayProductos: productos.docs.length > 0,
             titulo: 'Productos',
             loggedIn: true,
-            cartId: req.user.cart
+            cartId: req.user.cart,
+            user: req.user
         })
     } catch (error) {
         next(error)

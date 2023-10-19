@@ -29,8 +29,7 @@ webRouter.get('/login', (req, res) => {
         loggedIn =  true
     } else {
         loggedIn = false }
-
-    res.render('login', {title: "Login", loggedIn: loggedIn} )
+    res.render('login', {title: "Login", loggedIn: loggedIn, user:req.user} )
 })
 
 webRouter.get('/restablecer', (req, res) =>{
@@ -41,11 +40,11 @@ webRouter.get('/token/:token', (req, res) =>{
     res.render('token', {title: "Restablecer", token: req.params.token})
 })
 
-webRouter.get('/premium',autenticacion, (req, res) =>{
-    const uid = req.user._id
-    const esUser = req.user.rol == "user" ? true : false
-    res.render('upload', {title:"Cargar Archivos ", uid, loggedIn: true , esUser})
-})
+// webRouter.get('/premium',autenticacion, (req, res) =>{
+//     const uid = req.user._id
+//     const esUser = req.user.rol == "user" ? true : false
+//     res.render('upload', {title:"Cargar Archivos ", uid, loggedIn: true , esUser})
+// })
 
 async function profileGetController(req, res, next) {
         try {
@@ -56,7 +55,11 @@ async function profileGetController(req, res, next) {
                 res.render('adminProfile', {
                     title: 'Admin Profile',
                     users,
-                    showDeleteButton: true 
+                    showDeleteButton: true,
+                    loggedIn: true,
+                    esUser: req.user.rol === "user" ? true : false,
+                    esAdmin: req.user.rol === "admin" || req.user.rol === "premium" ? true : false,
+                    user: req.user,
                 });
                 break
                 case 'user' :
@@ -69,31 +72,30 @@ async function profileGetController(req, res, next) {
                     req.user.documents.forEach((objeto) => {
                         if (objeto[propiedadBuscada] === valorBuscado1) {
                             identificacion = true
-                        }
-                    })
-                    req.user.documents.forEach((objeto) => {
-                        if (objeto[propiedadBuscada] === valorBuscado2) {
+                        } else if (objeto[propiedadBuscada] === valorBuscado2) {
                             domicilio = true
-                        }
-                    })
-                    req.user.documents.forEach((objeto) => {
-                        if (objeto[propiedadBuscada] === valorBuscado3) {
+                        } else if(objeto[propiedadBuscada] === valorBuscado3) {
                             estadoDeCuenta = true
                         }
                     })
-                    console.log(identificacion, domicilio, estadoDeCuenta)
                     res.render('userProfile', {
                     title: 'User Profile',
                     user: req.user,
                     identificacion,
                     domicilio,
-                    estadoDeCuenta
+                    estadoDeCuenta,
+                    loggedIn: true,
+                    esUser: req.user.rol === "user" ? true : false,
+                    esAdmin: req.user.rol === "admin" || req.user.rol === "premium" ? true : false,
                 });
                 break
                 case 'premium':
                     res.render('premiumProfile', {
                     title: 'User Profile',
-                    user: req.user
+                    user: req.user,
+                    loggedIn: true,
+                    esUser: req.user.rol === "user" ? true : false,
+                    esAdmin: req.user.rol === "admin" || req.user.rol === "premium" ? true : false,
                 });
             } 
         }catch (error) {next(error)}

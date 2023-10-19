@@ -7,7 +7,6 @@ if (restablecerForm instanceof HTMLFormElement) {
         const user = {
             email : emailInput.value,
         }
-        console.log(user)
         fetch('/api/token ', {
             method: 'POST',
             body: JSON.stringify(user),

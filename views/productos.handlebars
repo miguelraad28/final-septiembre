@@ -1,7 +1,4 @@
 <div class="container mt-5">
-    <h1 class="text-center">Bienvenido {{user}} !</h1>
-    <p class="text-center">Rol : {{rol}}</p>
-
     <h1 class="mt-5">Productos</h1>
 
     {{#if hayProductos}}
@@ -10,7 +7,7 @@
         {{#each productos.docs}}
         <div class="col mb-4">
             <div class="card h-100">
-                <a href="/products/{{this._id}}">
+                <a href="/products/detail/{{this._id}}">
                     <img src="/uploads/products/{{this.thumbnail}}" class="card-img-top" alt="Producto">
                 </a>
                 <div class="card-body">
@@ -32,7 +29,7 @@
         {{#each productos.docs}}
         <div class="col mb-4">
             <div class="card h-100">
-                <a href="/products/{{this._id}}">
+                <a href="/products/detail/{{this._id}}">
                     <img src="/uploads/products/{{this.thumbnail}}" class="card-img-top" alt="Producto">
                 </a>
                 <div class="card-body">

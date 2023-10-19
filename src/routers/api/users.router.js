@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { deleteUserController, getUsersController, postMulterUserController, postUserController, putPasswordUsersController, putRolUserController } from '../../controllers/api/users.controllers.js'
+import { deleteOneController, deleteUserController, getUsersController, postMulterUserController, postUserController, putPasswordUsersController, putRolFromAdminUserController, putRolUserController } from '../../controllers/api/users.controllers.js'
 import { multerMiddleware } from '../../middlewares/multer.js'
 import { autenticacion } from '../../middlewares/autenticacion.js'
 import { auth } from '../../middlewares/auth.js'
@@ -9,6 +9,8 @@ export const usersRouter = Router()
 usersRouter.get('/', getUsersController)
 usersRouter.post('/', postUserController)
 usersRouter.put('/:token', putPasswordUsersController)
+usersRouter.put('/rol/:uid', auth(["admin"]), putRolFromAdminUserController)
+usersRouter.delete('/delete/:uid', auth(["admin"]), deleteOneController)
 usersRouter.get('/premium/:uid', putRolUserController)
 
 usersRouter.post('/:uid/documents', 

@@ -16,7 +16,7 @@ export const productosRouter = Router()
 
 productosRouter.post('/mockingproducts', mockProductsPostController )
 // productosRouter.post('/', autenticacion, auth(["admin", "premium"]), multerMiddleware.fields([{ name: 'thumbnail', maxCount: 1 }]), productsPostController) // guardar producto
-productosRouter.post('/',autenticacion, auth(['admin', 'premium']),multerMiddleware.single('thumbnail')), // Usamos .single() para el campo "thumbnail" de imagen productsPostController);
+productosRouter.post('/',autenticacion, auth(['admin', 'premium']), multerMiddleware.single('thumbnail'), productsPostController), // Usamos .single() para el campo "thumbnail" de imagen productsPostController);
 // productosRouter.put('/:pid', autenticacion, auth(["admin", "premium"]),productsPutController)
 productosRouter.put('/:pid', autenticacion, auth(["admin", "premium"]), multerMiddleware.single('thumbnail'), productsPutController);
 

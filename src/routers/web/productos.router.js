@@ -6,7 +6,7 @@ import { auth } from '../../middlewares/auth.js'
 export const productosRouter = Router()
 
 productosRouter.get('/', autenticacion , productsGetController)
-productosRouter.get('/:pid', autenticacion, productsGetOneController)
+productosRouter.get('/detail/:pid', autenticacion, productsGetOneController)
 
 productosRouter.get('/create', autenticacion, auth(["admin", "premium"]) , crearProductsGetController)
 productosRouter.get('/:pid/edit', autenticacion, auth(["admin", "premium"]), editarProductsGetController)

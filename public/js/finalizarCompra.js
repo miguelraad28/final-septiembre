@@ -15,4 +15,3 @@ finalizarComprabtn.addEventListener("click", () => {
         }
     })
 })
-

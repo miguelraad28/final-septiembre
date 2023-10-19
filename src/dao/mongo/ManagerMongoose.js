@@ -55,8 +55,8 @@ export class ManagerMongoose {
     const options = { new: true, upsert: false, multi: true };
 
     // EJEMPLO Actualizar un solo documento
-    // const filter = { _id: 'documento_id' };
-    // const updatedData = { name: 'John Doe', age: 30 };
+    // const filter = { _id: 'documento_id' }
+    // const updatedData = { name: 'John Doe', age: 30 }
     // const updatedDocument = await manager.update(filter, updatedData);
     if (typeof filter === 'object' && !Array.isArray(filter)) {
         const updatedDocument = await this.collection.findOneAndUpdate(filter, updatedData, options).lean();

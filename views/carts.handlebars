@@ -1,25 +1,5 @@
-{{!-- <h1>{{#if sonVarios}}Detalles de los carritos{{else}}Detalles del carrito{{/if}}</h1>
-<h1>hola es este</h1>
-<h2>{{carts._id}}</h2>
-
-{{#each carts}}
-    <h2>ID del carrito: {{this._id}}</h2>
-    <ul>
-        {{#each this.listProducts}}
-            <li>
-                <p>ID del producto: {{this.productId}}</p>
-                <p>Cantidad: {{this.cantidad}}</p>
-            </li>
-        {{/each}}
-    </ul>
-{{/each}}
-
-<button id="finalizarCompra" data-cart-id="{{cartId}}">Realizar compra</button>
-<script src="/js/finalizarCompra.js"></script> --}}
-
-
-
-<a href="token/">reestablecer</a>
+{{!-- 
+<a href="token/">restablecer</a>
 
 
 <h1>{{#if sonVarios}}Detalles de los carritos
@@ -46,4 +26,40 @@
 
 
 <button id="finalizarCompra" data-cart-id="{{cartId}}">Realizar compra</button>
-<script src="/js/finalizarCompra.js"></script> 
+<script src="/js/finalizarCompra.js"></script>  --}}
+
+    <div class="container mt-5">
+        <h1>{{#if sonVarios}}Detalles de los carritos{{else}}Detalles del carrito{{/if}}</h1>
+
+        {{#each carts}}
+        <div class="card mt-3">
+            <div class="card-body">
+                <ul class="list-group">
+                    {{#each this.listProducts}}
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="/uploads/products/{{this.productId.thumbnail}}" alt="{{this.productId.title}}" class="img-thumbnail">
+                            </div>
+                            <div class="col-md-10">
+                                <p>{{this.productId.title}}</p>
+                                <p>{{this.productId.description}}</p>
+                                <p>${{this.productId.price}}</p>
+                                <p>SKU :{{this.productId.code}}</p>
+                                <p>Cantidad: {{this.cantidad}}</p>
+                            </div>
+                        </div>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+
+    <div class="container mt-3">
+        {{!-- <a class="btn btn-outline-danger" id="btnRestablecer" data-cart-id="{{cartId}}">Restablecer</a> --}}
+        <button id="finalizarCompra" data-cart-id="{{cartId}}" class="btn btn-success">Finalizar compra</button>
+    </div>
+
+    <script src="/js/finalizarCompra.js"></script>

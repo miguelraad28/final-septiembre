@@ -1,7 +1,8 @@
 //import { productosService } from '../../services/productos.service.js'
 import crearProductoMock from '../../mocks/productoMock.js';
 import { Product } from '../../models/Product.js'
-import { productRepository } from '../../repositories/index.js';
+import { productRepository, userRepository } from '../../repositories/index.js';
+import { mailer } from '../../utils/mailer.js';
 
 export async function productsGetController(req, res, next) {
 
@@ -112,6 +113,12 @@ export async function productsDeleteController(req, res, next) {
         const idProducto = req.params.pid
         const product = await productRepository.read({ _id: idProducto })
         if (req.user._id == product.owner || req.user.rol == "admin") {
+            if(product.owner != "admin"){
+                const owner = await userRepository.readDTO({_id: product.owner})
+                console.log(owner)
+                const mensaje = `<p>El producto ${product.title} fue eliminado</p>`
+                await mailer.send(owner.email, "Su producto fue eliminado", mensaje )
+            }
             await productRepository.delete({ _id: idProducto })
             res.status(200)
         } else {

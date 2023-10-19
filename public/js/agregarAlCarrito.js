@@ -19,21 +19,22 @@ btnAgregarAlCarrito.forEach((btn) => {
                 }
             })
             if (response.ok) {
-                socket.emit('agregarAlCarrito', datosACargar);
+                socket.emit('agregarAlCarrito', datosACargar)
             } else {
                 throw new Error(`Error al agregar el producto al carrito: ${response.status}`);
             }
         } catch (error) {
-            console.error(error);
+            //TODO
+            console.error(error)
         }
-    });
-});
+    })
+})
 
 socket.on('carritoActualizado', datosCargados => {
     const {cantidad, idProducto} = datosCargados
-    const pAgregado = document.getElementById(`p${idProducto}`);
+    const pAgregado = document.getElementById(`p${idProducto}`)
     if (pAgregado) {
-        pAgregado.innerHTML = `Agregado ${cantidad} al carrito.`;
+        pAgregado.innerHTML = `Agregado ${cantidad} al carrito.`
     }
-});
+})
 

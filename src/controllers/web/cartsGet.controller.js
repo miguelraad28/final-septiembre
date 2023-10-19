@@ -1,4 +1,3 @@
-import { NotFoundError } from '../../errors/errors.js';
 import { cartRepository } from '../../repositories/index.js'
 
 export async function cartsGetController(req, res) {
@@ -11,7 +10,8 @@ export async function cartsGetController(req, res) {
             carts: carts,
             titulo: 'Carts',
             loggedIn: true,
-            cartId: req.user.cart
+            cartId: req.user.cart,
+            user: req.user
         });
     } catch (error) {
         res.send('error:' + JSON.stringify(error));
