@@ -15,7 +15,7 @@ export async function productsGetController(req, res, next) {
                 criterioDeBusqueda = { ...criterioDeBusqueda, [key]: req.query[key] };
             }
         }
-    
+
         const opcionesDePaginacion = {
             limit: req.query.limit || 10,
             page: req.query.page || 1,
@@ -36,26 +36,36 @@ export async function productsGetController(req, res, next) {
 
 export async function productsGetOneController(req, res, next) {
     try {
-        const producto = await productRepository.read({_id: req.params.pid})
+        const producto = await productRepository.read({ _id: req.params.pid })
         res.status(200).json(producto)
-        } catch (error) {
-            req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`)
-            next(error)
-    }    
+    } catch (error) {
+        req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`)
+        next(error)
+    }
 }
 
 
 export async function productsPostController(req, res, next) {
     try {
-        console.log(req.user._id)
-        req.body.owner = req.user._id || "admin"
-        const product = new Product(req.body)
-        console.log(product)
-        const productoRegistrado = await productRepository.registrar(product)
-        res.status(201).json(productoRegistrado)
+        // Si estás utilizando el modelo de producto, simplemente crea una instancia con los datos del formulario
+        const product = new Product({
+            title: req.body.title,
+            description: req.body.description,
+            price: Number(req.body.price),
+            thumbnail: req.file.filename, // Multer guarda el nombre del archivo en req.file.filename
+            code: req.body.code,
+            stock: Number(req.body.stock),
+            owner: req.user._id || "admin"
+            // Otros campos que desees guardar en el producto
+        });
+
+        // Guardar el producto en la base de datos, aquí asumo que tienes un método llamado "registrar" en el repositorio
+        const productoRegistrado = await productRepository.registrar(product);
+
+        res.status(201).json(productoRegistrado);
     } catch (error) {
-        req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`)
-        next(error)
+        req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`);
+        next(error);
     }
 }
 
@@ -74,36 +84,42 @@ export async function mockProductsPostController(req, res, next) {
     }
 }
 
-export async function productsPutController (req, res, next){
+
+export async function productsPutController(req, res, next) {
     try {
-        const idProducto = req.params.pid
-        const datosAActualizar = req.body
-        const product = await productRepository.read({idProducto})
-        console.log(product)
-        if(req.user._id == product.owner || req.user.rol == "admin"){
-            const productoActualizado = await productRepository.actualizarPorId(idProducto, datosAActualizar)
-            res.status(200).json(productoActualizado)
-        }else{
-            throw new Error("no tiene el permiso correspondiente")
+        const idProducto = {_id: req.params.pid}
+        const datosAActualizar = req.body;
+        const product = await productRepository.read(idProducto)
+        if (req.file) {
+            const nuevoThumbnail = req.file.filename
+            datosAActualizar.thumbnail = nuevoThumbnail
         }
-        } catch (error) {
-            req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`)
-            next(error)
-    } 
+        if (req.user._id == product.owner || req.user.rol == "admin") {
+            const productoActualizado = await productRepository.update(idProducto, datosAActualizar)
+            res.status(200).json(productoActualizado);
+        } else {
+            throw new Error("No tiene el permiso correspondiente");
+        }
+    } catch (error) {
+        req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`);
+        next(error);
+    }
 }
 
-export async function productsDeleteController (req, res, next){
+
+export async function productsDeleteController(req, res, next) {
     try {
         const idProducto = req.params.pid
-        const product = await productRepository.read({_id : idProducto})
-        if(req.user._id == product.owner || req.user.rol == "admin"){
-            await productRepository.delete({_id : idProducto})
+        const product = await productRepository.read({ _id: idProducto })
+        if (req.user._id == product.owner || req.user.rol == "admin") {
+            await productRepository.delete({ _id: idProducto })
             res.status(200)
-        } else{
+        } else {
+            //TODO
             throw new Error("no tiene el permiso correspondiente")
         }
-        } catch (error) {
-            req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`)
-            next(error)
-    } 
+    } catch (error) {
+        req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`)
+        next(error)
+    }
 }

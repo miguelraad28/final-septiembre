@@ -1,12 +1,43 @@
-<h1>Editar producto</h1>
-    <form id="editProductForm">
-        <label for="titleInput">title</label> <input id="titleInput" type="text" value="{{product.title}}"> <br>
-        <label for="descriptionInput">description</label> <input id="descriptionInput" type="text" value="{{product.description}}"><br>
-        <label for="priceInput">price</label> <input id="priceInput" type="number" value="{{product.price}}"><br>
-        <label for="thumbnailInput">thumbnail</label> <input id="thumbnailInput" type="text" value="{{product.thumbnail}}"><br>
-        <label for="codeInput">code</label> <input id="codeInput" type="text" value="{{product.code}}"><br>
-        <label for="stockInput">stock</label> <input id="stockInput" type="number" value="{{product.stock}}"><br>
-        <button id="btnPutEditedProduct" data-product-id="{{product._id}}">Editar</button>
-    </form>
+<div class="container mt-5">
+    <div class="row">
+        <!-- Columna del formulario -->
+        <h1 class="text-center">Editar producto</h1>
+        <div class="col-md-6">
+            <form id="editProductForm" class="mt-4" action="/api/products/{{product._id}}" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="_method" value="PUT">
+                <input type="hidden" name="type" value="products">
+                <div class="form-group">
+                    <label for="titleInput">Title</label>
+                    <input id="titleInput" type="text" class="form-control" name="title" value="{{product.title}}">
+                </div>
+                <div class="form-group">
+                    <label for="descriptionInput">Description</label>
+                    <input id="descriptionInput" type="text" class="form-control" name="description" value="{{product.description}}">
+                </div>
+                <div class="form-group">
+                    <label for="priceInput">Price</label>
+                    <input id="priceInput" type="number" class="form-control" name="price" value="{{product.price}}">
+                </div>
+                <div class="form-group">
+                    <label for="thumbnailInput" class="form-label">Image</label>
+                    <input type="file" name="thumbnail" id="thumbnailInput" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="codeInput">Code</label>
+                    <input id="codeInput" type="text" class="form-control" name="code" value="{{product.code}}">
+                </div>
+                <div class="form-group">
+                    <label for="stockInput">Stock</label>
+                    <input id="stockInput" type="number" class="form-control" name="stock" value="{{product.stock}}">
+                </div>
+                <button id="btnPutEditedProduct" class="btn btn-primary btn-block">Editar</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <img src="/uploads/products/{{product.thumbnail}}" alt="Product Thumbnail" class="img-thumbnail" style="max-height: 300px;">
+        </div>
+    </div>
+</div>
 
-    <script src="/js/editarProducto.js"></script>
+<script src="/js/editarProducto.js"></script>
+

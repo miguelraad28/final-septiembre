@@ -32,6 +32,7 @@ export default class CartRepository {
             throw new NotFoundError()
         }
         // Verificar si el producto ya está en el carrito
+
         const existingProductIndex = cart[0].listProducts.findIndex(p => p.productId.toString() === _id);
         if (existingProductIndex !== -1) {
             // El producto existe en el carrito, incrementar la cantidad

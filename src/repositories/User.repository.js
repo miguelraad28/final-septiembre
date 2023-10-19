@@ -6,20 +6,20 @@ export default class UserRepository{
     }
 
     async create(user) {
-        let productToInsert = new User(user)
+        const productToInsert = new User(user)
         return await this.persistence.create(productToInsert)
     }
 
     async readDTO(filter) {
-        const result = await this.persistence.read(filter);
+        const result = await this.persistence.read(filter)
         if (Array.isArray(result)) {
             // Si el resultado es un array, excluimos el campo "password" de cada objeto
             return result.map(obj => {
                 if (obj.password) {
-                    delete obj.password;
+                    delete obj.password
                 }
-                return obj;
-            });
+                return obj
+            })
         } else if (result && typeof result === 'object') {
             // Si el resultado es un solo objeto, excluimos el campo "password" del objeto
             if (result.password) {
@@ -32,14 +32,15 @@ export default class UserRepository{
         }
     }
     async read(filter){
-        return await this.persistence.read(filter)
+        const user = await this.persistence.read(filter)
+        return user
     }
 
     async update(filter, updatedData){
         return await this.persistence.update(filter, updatedData)
     }
-    async delete(filter){
-        return await this.persistence.delete()
+    async deleteMany(filter){
+        return await this.persistence.deleteMany(filter)
     }
 }
 

@@ -1,29 +1,3 @@
-{{!-- <form action="/api/users/{{uid}}/documents" method="POST" enctype="multipart/form-data">
-  <!-- Otros campos del formulario -->
-  <input type="hidden" name="type" value="profile">
-  <input type="file" name="image">
-  <button type="submit">upload</button>
-</form> --}}
-{{!-- 
-<form action="/api/users/{{uid}}/documents" method="POST" enctype="multipart/form-data">
-  <input type="hidden" name="type" value="documents">
-  <label for="identificacion">Identificación:</label>
-  <input type="file" name="identificacion" id="identificacion">
-  <br>
-  
-  <label for="domicilio">Comprobante de Domicilio:</label>
-  <input type="file" name="domicilio" id="domicilio">
-  <br>
-  
-  <label for="estadoDeCuenta">Comprobante de Estado de Cuenta:</label>
-  <input type="file" name="estadoDeCuenta" id="estadoDeCuenta">
-  <br>
-  
-  <button type="submit">Subir Imágenes</button>
-</form>
-
---}}
-
 <div style="max-width: 400px; margin: 50px auto;">
   <form action="/api/users/{{uid}}/documents" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="type" value="documents">

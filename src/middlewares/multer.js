@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
   let destination = 'public/uploads/documents'
       if (type === 'profile') {
           destination = 'public/uploads/profiles'
-      } else if (type === 'product') {
+      } else if (type === 'products') {
           destination = 'public/uploads/products'
       }
       cb(null, destination)

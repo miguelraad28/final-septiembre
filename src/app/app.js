@@ -1,6 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import { engine } from 'express-handlebars'
+import exphbs from 'express-handlebars';
 import { Server } from 'socket.io'
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
@@ -21,6 +22,16 @@ import { multerMiddleware } from '../middlewares/multer.js'
 
 export const app = express()
 
+
+const hbs = exphbs.create()
+hbs.handlebars.registerHelper('hasDocument', function hasDocument(documents, documentType) {
+    return documents.some(doc => doc.documento === documentType)
+});
+hbs.handlebars.registerHelper('isLastConnectionOld', function (last_connection) {
+    const twoDaysAgo = new Date();
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+    return new Date(last_connection) < twoDaysAgo;
+});
 
 app.engine('handlebars', engine())
 app.set('views', './views')

@@ -11,47 +11,54 @@ btnEditar?.forEach((btn) => {
 
 const btnDelete = document.querySelectorAll('.btnDelete')
 
-
 btnDelete?.forEach((btn) => {
     btn.addEventListener("click", () => {
         fetch(`/api/products/${btn.getAttribute('data-product-id')}`, {
             method: 'DELETE',
             headers: {
-            'Content-Type': 'application/json'
-            }
-        })
-    })
-})
-
-
-
-
-
-const editProductForm = document.getElementById('editProductForm')
-const titleInput = document.getElementById('titleInput')
-const descriptionInput = document.getElementById('descriptionInput')
-const priceInput = document.getElementById('priceInput')
-const thumbnailInput = document.getElementById('thumbnailInput')
-const codeInput = document.getElementById('codeInput')
-const stockInput = document.getElementById('stockInput')
-const btnPutEdited = document.getElementById("btnPutEditedProduct")
-
-    btnPutEdited?.addEventListener('click', async () => {
-        const product = {
-            title : titleInput.value,
-            description : descriptionInput.value,
-            price : Number(priceInput.value),
-            thumbnail : thumbnailInput.value,
-            code : codeInput.value,
-            stock : Number(stockInput.value),
-        }
-        fetch(`/api/products/${btnPutEdited.getAttribute('data-product-id')}`, {
-            method: 'PUT',
-            body: JSON.stringify(product),
-            headers: {
                 'Content-Type': 'application/json'
             }
         })
-    })
+        .then(result => {
+            if (result.status === 200) {
+                window.location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Error al realizar la solicitud DELETE:', error);
+        });
+    });
+});
 
+
+
+
+
+
+
+const editProductForm = document.getElementById('editProductForm');
+const btnPutEdited = document.getElementById('btnPutEditedProduct');
+editProductForm?.addEventListener('submit', async (event) => {
+    event.preventDefault()
+
+    const method = editProductForm.querySelector('input[name="_method"]').value;
+    const url = editProductForm.getAttribute('action');
+    const formData = new FormData(editProductForm);
+    try {
+        const response = await fetch(url, {
+            method: method,
+            body: formData,
+        });
+        if (response.ok) {
+            const productId = url.substring(url.lastIndexOf('/') + 1); // Obtener el ID del producto de la URL
+            window.location.replace(`/products/${productId}`);
+        } else {
+            // TODO
+            console.error('Error en la solicitud:', response.status, response.statusText);
+        }
+    } catch (error) {
+        // TODO
+        console.error(error);
+    }
+});
 

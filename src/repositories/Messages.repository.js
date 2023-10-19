@@ -4,7 +4,7 @@ export default class MessagesRepository {
         this.persistencia = persistencia
     }
     async registrar(mensaje) {
-        await this.persistencia.guardar(mensaje)
+        await this.persistencia.create(mensaje)
     }
     async mostrarmensajes() {
         const messages = await this.persistencia.read()

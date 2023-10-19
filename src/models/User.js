@@ -2,8 +2,8 @@ import { validarEmail, validarNumeroEntero } from "../utils/validaciones.js";
 
 export default class User{
     constructor(user){
-        this.first_name = user.first_name,
-        this.last_name = user.last_name,
+        this.firstName = user.firstName,
+        this.lastName = user.lastName,
         this.email = validarEmail(user.email),
         this.age = validarNumeroEntero(user.age),
         this.password = user.password,

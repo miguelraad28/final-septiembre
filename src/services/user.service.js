@@ -64,65 +64,6 @@ class UserService {
     tokenRepository.createToken(objToken)
   }
 
-  // async documentsUpdate(filter, files){
-  //   const documents = []
-  //       if(files["identificacion"]){
-  //           documents.push({
-  //           documento: "identificacion",
-  //           name: files["identificacion"][0].filename,
-  //           reference: files["identificacion"][0].path
-  //           })
-  //       }
-  //       if(files["domicilio"]){
-  //           documents.push({
-  //               documento: "domicilio",
-  //               name: files["domicilio"][0].filename,
-  //               reference: files["domicilio"][0].path
-  //           })
-  //       }
-  //       if(files["estadoDeCuenta"]){
-  //           documents.push({
-  //               documento: "estadoDeCuenta",
-  //               name: files["estadoDeCuenta"][0].filename,
-  //               reference: files["estadoDeCuenta"][0].path
-  //           })
-  //       }
-  // }
-
-  // async documentsUpdate(filter, files) {
-  //   const documents = [];
-
-  //   if (files["identificacion"]) {
-  //     documents.push({
-  //       documento: "identificacion",
-  //       name: files["identificacion"][0].filename,
-  //       reference: files["identificacion"][0].path
-  //     });
-  //   }
-  //   if (files["domicilio"]) {
-  //     documents.push({
-  //       documento: "domicilio",
-  //       name: files["domicilio"][0].filename,
-  //       reference: files["domicilio"][0].path
-  //     });
-  //   }
-  //   if (files["estadoDeCuenta"]) {
-  //     documents.push({
-  //       documento: "estadoDeCuenta",
-  //       name: files["estadoDeCuenta"][0].filename,
-  //       reference: files["estadoDeCuenta"][0].path
-  //     });
-  //   }
-
-  //   // Agregar los documentos a la propiedad "documents" usando la función "update"
-  //   if (documents.length > 0) {
-  //     // Si hay al menos un documento, actualiza la propiedad "documents" con los nuevos objetos
-  //     const updateFilter = { _id: filter._id }; // Reemplaza '_id' por el campo que identifica al usuario
-  //     const updatedData = { $push: { documents: { $each: documents } } };
-  //     await userRepository.update(updateFilter, updatedData);
-  //   }
-  // }
-
   async documentsUpdate(filter, files) {
     const documentsToAdd = [];
 
@@ -176,23 +117,47 @@ class UserService {
     console.log("devolver un error indicando que el usuario no ha terminado de procesar su documentación.")
   }
 
-  async deletetwoDaysAgo(){
-    const twoDaysAgo = new Date()
-    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2)
-    const filter = { last_connection: { $lt: twoDaysAgo } }
-    try {
-      const users = await userRepository.read(filter)
-      for (const user of users){
-      const mensaje = `<p>Hola ${user.email}, tu usuario ha sido eliminado por inactividad</p>`
-      await mailer.send(user.email, "Usuario borrado", mensaje )
-      }
-      const deletedUsers = await userRepository.delete(filter);
-      console.log(`${deletedUsers} usuarios eliminados.`);
-    } catch (error) {
-      //hacer error
-      console.error('Error al eliminar usuarios:', error);
+//   async deletetwoDaysAgo(){
+//     const twoDaysAgo = new Date()
+//     twoDaysAgo.setDate(twoDaysAgo.getDate() - 2)
+//     const filter = { last_connection: { $lt: twoDaysAgo } }
+//     try {
+//       const users = await userRepository.read(filter)
+//       for (const user of users){
+//       const mensaje = `<p>Hola ${user.email}, tu usuario ha sido eliminado por inactividad</p>`
+//       await mailer.send(user.email, "Usuario borrado", mensaje )
+//       }
+//       const deletedUsers = await userRepository.delete(filter);
+//       console.log(`${deletedUsers} usuarios eliminados.`);
+//     } catch (error) {
+//       //TODO hacer error
+//       console.error('Error al eliminar usuarios:', error);
+//     }
+//   }
+async deletetwoDaysAgo() {
+  const twoDaysAgo = new Date();
+  twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+
+  try {
+    // Obtener todos los usuarios sin filtro
+    const allUsers = await userRepository.read();
+
+    // Filtrar los usuarios cuya última conexión sea anterior a dos días atrás
+    const usersToDelete = allUsers.filter((user) => user.last_connection < twoDaysAgo);
+    for (const user of usersToDelete) {
+      const mensaje = `<p>Hola ${user.firstName}, tu usuario ha sido eliminado por inactividad</p>`;
+      await mailer.send(user.email, "Usuario borrado", mensaje);
     }
+
+    // Eliminar los usuarios filtrados
+    await userRepository.deleteMany({ _id: { $in: usersToDelete.map((user) => user._id) } });
+  } catch (error) {
+    // Manejar cualquier error que pueda ocurrir durante el proceso
+    console.error('Error al eliminar usuarios:', error);
   }
+}
+
+
 }
 
 export const userService = new UserService()

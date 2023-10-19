@@ -1,0 +1,23 @@
+<div class="container mt-5">
+  <div class="row mt-4">
+    <div class="col-md-4">
+      <img src="/uploads/products/{{producto.thumbnail}}" class="img-fluid mb-4" alt="Producto">
+    </div>
+    <div class="col-md-8">
+      <h1 class="mb-4">{{producto.title}}</h1>
+        <p>Precio: {{producto.price}}</p>
+        <p>Descripcion:{{producto.description}}</p>
+        <p>SKU: {{producto.code}}</p>
+        <p>Stock: {{producto.stock}}</p>
+        <button class="btn btn-primary btnAgregarAlCarrito" data-product-id="{{producto._id}}">Agregar al carrito</button>
+        <button type="button" class="btn btn-outline-primary">
+          <a href="/products?page={{productos.page}}&{{query}}" class="text-decoration-none text-reset">Volver a la lista de productos</a>
+        </button>
+      </div>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+<script src="/js/agregarAlCarrito.js"></script>
+<script src="/js/editarProducto.js"></script>

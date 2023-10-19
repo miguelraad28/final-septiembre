@@ -46,6 +46,25 @@ export async function productsGetController(req, res, next) {
     }
 }
 
+export async function productsGetOneController(req, res, next) {
+    try {
+        const id = req.params.pid
+        const producto = await productRepository.read({_id: id})
+        res.render('producto', {
+            esUser: req.user.rol === "user" ? true : false,
+            esAdmin: req.user.rol === "admin" || req.user.rol === "premium" ? true : false,
+            user: req.user?.email,
+            rol: req.user?.rol,
+            producto: producto,
+            titulo: 'Producto',
+            loggedIn: true,
+            cartId: req.user.cart
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
 export async function crearProductsGetController(req, res, next) {
     try {
         res.render('crearProductos', {

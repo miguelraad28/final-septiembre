@@ -18,7 +18,6 @@ btnAgregarAlCarrito.forEach((btn) => {
                     'Content-Type': 'application/json'
                 }
             })
-            
             if (response.ok) {
                 socket.emit('agregarAlCarrito', datosACargar);
             } else {

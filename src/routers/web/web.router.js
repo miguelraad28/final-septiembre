@@ -4,6 +4,7 @@ import { productosRouter } from './productos.router.js'
 import { auth } from '../../middlewares/auth.js'
 import { chatController } from '../../controllers/web/chatController.js'
 import { autenticacion } from '../../middlewares/autenticacion.js'
+import { userRepository } from '../../repositories/index.js'
 
 
 export const webRouter = Router()
@@ -45,6 +46,61 @@ webRouter.get('/premium',autenticacion, (req, res) =>{
     const esUser = req.user.rol == "user" ? true : false
     res.render('upload', {title:"Cargar Archivos ", uid, loggedIn: true , esUser})
 })
+
+async function profileGetController(req, res, next) {
+        try {
+            const { rol } = req.user;
+            switch(rol){
+                case 'admin' :
+                const users = await userRepository.readDTO();
+                res.render('adminProfile', {
+                    title: 'Admin Profile',
+                    users,
+                    showDeleteButton: true 
+                });
+                break
+                case 'user' :
+                    const propiedadBuscada = 'documento'
+                    const valorBuscado1 = 'identificacion'
+                    const valorBuscado2 = 'domicilio'
+                    const valorBuscado3 = 'estadoDeCuenta'
+                    let identificacion = false ,domicilio = false, estadoDeCuenta = false
+
+                    req.user.documents.forEach((objeto) => {
+                        if (objeto[propiedadBuscada] === valorBuscado1) {
+                            identificacion = true
+                        }
+                    })
+                    req.user.documents.forEach((objeto) => {
+                        if (objeto[propiedadBuscada] === valorBuscado2) {
+                            domicilio = true
+                        }
+                    })
+                    req.user.documents.forEach((objeto) => {
+                        if (objeto[propiedadBuscada] === valorBuscado3) {
+                            estadoDeCuenta = true
+                        }
+                    })
+                    console.log(identificacion, domicilio, estadoDeCuenta)
+                    res.render('userProfile', {
+                    title: 'User Profile',
+                    user: req.user,
+                    identificacion,
+                    domicilio,
+                    estadoDeCuenta
+                });
+                break
+                case 'premium':
+                    res.render('premiumProfile', {
+                    title: 'User Profile',
+                    user: req.user
+                });
+            } 
+        }catch (error) {next(error)}
+}
+webRouter.get('/profile',autenticacion, profileGetController)
+
+
 
 
 webRouter.get("*", (req,res,next)=>{

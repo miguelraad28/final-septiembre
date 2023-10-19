@@ -1,8 +1,8 @@
 import { ManagerMongoose } from '../ManagerMongoose.js'
 
 export const userManagerMongo = new ManagerMongoose('users', {
-    first_name: String,
-    last_name: String,
+    firstName: String,
+    lastName: String,
     email: String,
     age: Number,
     password: String,
