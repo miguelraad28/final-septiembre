@@ -36,21 +36,19 @@ export default class ProductRepository{
             const product = products[i];
             if (product.productId.stock < product.cantidad) {
                     outOfStock.push({
-                        id: product.productId._id,
+                        productId: product.productId._id,
                         cantidad: product.cantidad,
                     })
                 } else {
                     const updatedStock = product.productId.stock -= product.cantidad
                     await this.persistence.update(product.productId._id, { stock: updatedStock});
                     withStock.push({
-                    id: product.productId._id,
+                    productId: product.productId._id,
                     cantidad: product.cantidad
-                });
+                })
             }
         }
-        return {
-            withStock,
-            outOfStock
+        return {withStock,outOfStock
         }
     }
 }

@@ -34,7 +34,7 @@
                 </a>
                 <div class="card-body">
                     <h4 class="card-title">{{this.title}}</h4>
-                    <h4 class="card-title">{{this.price}}</h4>
+                    <h4 class="card-title">${{this.price}}</h4>
                     <p class="card-text">SKU: {{this.code}}</p>
                     <p class="card-text">stock: {{this.stock}}</p>
                 </div>
@@ -46,6 +46,8 @@
         </div>
         {{/each}}
     </div>
+    {{else if esPremium}}
+    {{!-- TODO OPCIONES DE PREMIUM --}}
     {{/if}}
     <div class="divPaginate mt-4">
         {{#if productos.hasPrevPage}}
@@ -70,4 +72,3 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
 <script src="/js/agregarAlCarrito.js"></script>
 <script src="/js/editarProducto.js"></script>
-

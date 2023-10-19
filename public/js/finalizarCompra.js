@@ -11,7 +11,7 @@ finalizarComprabtn.addEventListener("click", () => {
     })
     .then(result => {
         if (result.status === 201) {
-            window.location.replace(`/carts/${idCart}`)
+            window.location.replace(`/order`)
         }
     })
 })

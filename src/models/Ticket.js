@@ -1,12 +1,12 @@
-import { validarEmail, validarNumero } from "../utils/validaciones.js"
+import { validarNumero } from "../utils/validaciones.js"
+import { randomUUID } from 'crypto';
 
 export default class Ticket {
-    static codeCounter = 0
-    constructor(amount, purchaser, products){
-        this.code = Ticket.codeCounter++
+    constructor(amount, purchaser, listProducts){
+        this.code = randomUUID()
         this.purchase_dateTime = new Date()
         this.amount = validarNumero(amount),
         this.purchaser = purchaser
-        // this.listProducts = products
+        this.listProducts = listProducts
     }
 }

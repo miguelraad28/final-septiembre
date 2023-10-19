@@ -11,7 +11,7 @@ export async function productsGetController(req, res, next) {
             }
         }
         const opcionesDePaginacion = {
-            limit: req.query.limit || 10,
+            limit: req.query.limit || 12,
             page: req.query.page || 1,
             lean: true 
         }
@@ -31,15 +31,16 @@ export async function productsGetController(req, res, next) {
 
         res.render('productos', {
             esUser: req.user.rol === "user" ? true : false,
-            esAdmin: req.user.rol === "admin" || req.user.rol === "premium" ? true : false,
-            user: req.user?.email,
-            rol: req.user?.rol,
+            esAdmin: req.user.rol === "admin" ? true : false,
+            esPremium: req.user.rol === "premium" ? true : false,
+            //user: req.user?.email,
+            //rol: req.user?.rol,
             query: queryParams,
             productos: productos,
             hayProductos: productos.docs.length > 0,
             titulo: 'Productos',
             loggedIn: true,
-            cartId: req.user.cart,
+            //cartId: req.user.cart,
             user: req.user
         })
     } catch (error) {

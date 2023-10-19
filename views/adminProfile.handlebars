@@ -1,74 +1,154 @@
-{{!-- <div class="container mt-5">
-  <h1 class="text-center">Perfil de Administrador</h1>
-  <div class="table-responsive">
-    <table class="table table-striped table-hover">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Rol</th>
-          <th>Email</th>
-          <th>Edad</th>
-          <th>Última Conexión</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each users}}
-        <tr {{#if (isLastConnectionOld this.last_connection)}}class="table-danger"{{/if}}>
-          <td>{{this.firstName}}</td>
-          <td>{{this.lastName}}</td>
-          <td>{{this.rol}}</td>
-          <td>{{this.email}}</td>
-          <td>{{this.age}}</td>
-          <td>{{this.last_connection}}</td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
-    <p>¿Desea eliminar usuarios a los que su última conexión fue hace más de dos días?</p>
-    <button id="btnDeleteUsers" class="btn btn-danger btn-sm btnEliminarUsuario">Eliminar</button>
-  </div>
-</div>
-
- --}}
-
 <div class="container mt-5">
-    <h1 class="text-center">Perfil de Administrador</h1>
-    <div class="table-responsive">
+  <!-- Pestañas -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" data-bs-toggle="tab" href="#usuarios" aria-selected="true" role="tab">Administrar Usuarios</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" data-bs-toggle="tab" href="#productos" aria-selected="false" role="tab">Crear Productos</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" data-bs-toggle="tab" href="#ventas" aria-selected="false" role="tab">Ventas</a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane fade show active" id="usuarios" role="tabpanel">
+      <div class="table-responsive">
         <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Rol</th>
-                    <th>Email</th>
-                    <th>Edad</th>
-                    <th>Última Conexión</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each users}}
-                <tr {{#if (isLastConnectionOld this.last_connection)}}class="table-danger"{{/if}}>
-                    <td>{{this.firstName}}</td>
-                    <td>{{this.lastName}}</td>
-                    <td>{{this.rol}}</td>
-                    <td>{{this.email}}</td>
-                    <td>{{this.age}}</td>
-                    <td>{{this.last_connection}}</td>
-                    <td>
-                      <div class="btn-group-vertical">
-                        <button type="button" id="btnModificar" class="btn btn-sm btn-outline-warning" data-user-id="{{this._id}}">Modificar</button>
-                        <button type="button" id="btnEliminar" class="btn btn-sm btn-outline-danger" data-user-id="{{this._id}}">Eliminar</button>
-                      </div>
-                    </td>
-                </tr>
-                {{/each}}
-            </tbody>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Rol</th>
+              <th>Email</th>
+              <th>Edad</th>
+              <th>Última Conexión</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each users}}
+              <tr {{#if (isLastConnectionOld this.last_connection)}}class="table-danger"{{/if}}>
+                <td>{{this.firstName}}</td>
+                <td>{{this.lastName}}</td>
+                <td>{{this.rol}}</td>
+                <td>{{this.email}}</td>
+                <td>{{this.age}}</td>
+                <td>{{this.last_connection}}</td>
+                <td>
+                  <div class="btn-group-vertical">
+                    <button type="button" id="btnModificar" class="btn btn-sm btn-outline-warning" data-user-id="{{this._id}}">Modificar rol</button>
+                    <button type="button" id="btnEliminar" class="btn btn-sm btn-outline-danger" data-user-id="{{this._id}}">Eliminar</button>
+                  </div>
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
         </table>
         <p>¿Desea eliminar usuarios a los que su última conexión fue hace más de dos días?</p>
         <button id="btnDeleteUsers" class="btn btn-danger btn-sm btnEliminarUsuario">Eliminar</button>
+      </div>
     </div>
+    <div class="tab-pane fade" id="productos" role="tabpanel">
+      <div class="container mt-5">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <h1 class="text-center">Crear producto nuevo</h1>
+            <form id="createProductForm" class="mt-4" action="/api/products" method="post" enctype="multipart/form-data">
+              <input type="hidden" name="type" value="products">
+              <div class="form-group">
+                <label for="titleInput">Title</label>
+                <input id="titleInput" type="text" class="form-control" name="title">
+              </div>
+              <div class="form-group">
+                <label for="descriptionInput">Description</label>
+                <input id="descriptionInput" type="text" class="form-control" name="description">
+              </div>
+              <div class="form-group">
+                <label for="priceInput">Price</label>
+                <input id="priceInput" type="number" class="form-control" name="price">
+              </div>
+              <div class="form-group">
+                <label for="thumbnailInput" class="form-label">Image</label>
+                <input type="file" name="thumbnail" id="thumbnailInput" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="codeInput">Code</label>
+                <input id="codeInput" type="text" class="form-control" name="code">
+              </div>
+              <div class="form-group">
+                <label for="stockInput">Stock</label>
+                <input id="stockInput" type="number" class="form-control" name="stock">
+              </div>
+              <button id="btnCreateProduct" class="btn btn-primary btn-block">Create</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="ventas" role="tabpanel">
+      <div class="container mt-5">
+        <div class="row justify-content-center">
+          {{#each orders}}
+            <div class="card mb-4">
+              <div class="card-header">
+                <h3 class="text-center">Orden de Compra - {{code}}</h3>
+              </div>
+              <div class="card-body">
+              <div class="row mb-3">
+                <div class="col">
+                  <h4>ID de Orden: {{_id}}</h4>
+                </div>
+              </div>
+              <div class="row mb-3">
+              <div class="col">
+                <h4>Fecha y Hora de Compra: {{purchase_dateTime}}</h4> 
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h4>Comprador:{{purchaser}}</h4> 
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h4>Productos:</h4>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Producto</th>
+                          <th>Cantidad</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {{#each listProducts}}
+                          <tr>
+                            <td>
+                              <div class="d-flex align-items-center">
+                                <img src="/uploads/products/{{this.productId.thumbnail}}" alt="img" class="img-fluid mr-2" style="max-height: 40px;">{{this.productId.title}}
+                              </div>
+                            </td>
+                            <td>{{this.cantidad}}</td>
+                          </tr>
+                        {{/each}}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="text-right">
+                  <strong>Monto Total: {{amount}}</strong>
+                </div>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<script src="/js/deleteUsers.js"></script>
+<!-- Asegúrate de incluir los scripts de Bootstrap para que las pestañas funcionen correctamente -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="/js/deleteUsers.js" defer></script>

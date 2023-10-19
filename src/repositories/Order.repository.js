@@ -8,9 +8,9 @@ export default class OrderRepository {
     async createOrder(data) {
         return await this.persistence.create(data);
     }
-    async mostrarOrdersSegunPropiedad(data) {
+    async read(filter) {
         try {
-            return ordenesEncontradas = await this.persistence.read(data)
+            return await this.persistence.readAndPopulate(filter)
         } catch (error) {
             winstonLogger.error(`Error en la consulta: ${error}`)
         }

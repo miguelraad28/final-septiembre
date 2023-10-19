@@ -114,7 +114,7 @@ class UserService {
           return await userRepository.update(filter, updatedData)
         }
     //TODO ERROR
-    console.log("devolver un error indicando que el usuario no ha terminado de procesar su documentación.")
+    console.error("devolver un error indicando que el usuario no ha terminado de procesar su documentación.")
   }
 
 //   async deletetwoDaysAgo(){

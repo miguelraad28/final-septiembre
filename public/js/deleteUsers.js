@@ -18,7 +18,6 @@ btnDeleteUsers.addEventListener("click", () => {
 
 const btnModificar = document.querySelectorAll('.btn-outline-warning')
 const btnEliminar = document.querySelectorAll('.btn-outline-danger')
-
     btnModificar.forEach((btn) => {
         btn.addEventListener('click', (event) => {
             const userId = event.target.dataset.userId;

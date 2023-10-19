@@ -4,7 +4,7 @@ import { productosRouter } from './productos.router.js'
 import { auth } from '../../middlewares/auth.js'
 import { chatController } from '../../controllers/web/chatController.js'
 import { autenticacion } from '../../middlewares/autenticacion.js'
-import { userRepository } from '../../repositories/index.js'
+import { orderRepository, userRepository } from '../../repositories/index.js'
 
 
 export const webRouter = Router()
@@ -48,19 +48,22 @@ webRouter.get('/token/:token', (req, res) =>{
 
 async function profileGetController(req, res, next) {
         try {
-            const { rol } = req.user;
+            const { rol } = req.user
+            let orders
             switch(rol){
                 case 'admin' :
                 const users = await userRepository.readDTO();
+                orders = await orderRepository.read()
                 res.render('adminProfile', {
                     title: 'Admin Profile',
                     users,
-                    showDeleteButton: true,
                     loggedIn: true,
                     esUser: req.user.rol === "user" ? true : false,
-                    esAdmin: req.user.rol === "admin" || req.user.rol === "premium" ? true : false,
+                    esAdmin: req.user.rol === "admin" ? true : false,
+                    esPremium: req.user.rol === "premium" ? true : false,
                     user: req.user,
-                });
+                    orders
+                })
                 break
                 case 'user' :
                     const propiedadBuscada = 'documento'
@@ -68,7 +71,6 @@ async function profileGetController(req, res, next) {
                     const valorBuscado2 = 'domicilio'
                     const valorBuscado3 = 'estadoDeCuenta'
                     let identificacion = false ,domicilio = false, estadoDeCuenta = false
-
                     req.user.documents.forEach((objeto) => {
                         if (objeto[propiedadBuscada] === valorBuscado1) {
                             identificacion = true
@@ -78,6 +80,7 @@ async function profileGetController(req, res, next) {
                             estadoDeCuenta = true
                         }
                     })
+                    orders = await orderRepository.read({purchaser: req.user.email})
                     res.render('userProfile', {
                     title: 'User Profile',
                     user: req.user,
@@ -87,22 +90,45 @@ async function profileGetController(req, res, next) {
                     loggedIn: true,
                     esUser: req.user.rol === "user" ? true : false,
                     esAdmin: req.user.rol === "admin" || req.user.rol === "premium" ? true : false,
+                    orders
                 });
                 break
                 case 'premium':
+                    orders = await orderRepository.read({purchaser: req.user.email})
                     res.render('premiumProfile', {
-                    title: 'User Profile',
+                    title: 'Premium Profile',
                     user: req.user,
                     loggedIn: true,
                     esUser: req.user.rol === "user" ? true : false,
-                    esAdmin: req.user.rol === "admin" || req.user.rol === "premium" ? true : false,
-                });
+                    esAdmin: req.user.rol === "admin" ? true : false,
+                    esPremium: req.user.rol === "premium" ? true : false,
+                    orders
+                })
             } 
         }catch (error) {next(error)}
 }
 webRouter.get('/profile',autenticacion, profileGetController)
 
+async function orderGetController(req, res, next) {
+    try {
+        let orders
+        if(req.user.rol == "admin"){
+        }else{
+            orders = await orderRepository.read({purchaser: req.user.email})
+        }
+        console.log(orders)
+            res.render('order', {
+                title: 'Orden de compra',
+                user: req.user,
+                loggedIn: true,
+                esUser: req.user.rol === "user" ? true : false,
+                esAdmin: req.user.rol === "admin" || req.user.rol === "premium" ? true : false,
+                orders
+            })
+        } catch (error) {next(error)}
+}
 
+webRouter.get('/order', autenticacion, orderGetController)
 
 
 webRouter.get("*", (req,res,next)=>{

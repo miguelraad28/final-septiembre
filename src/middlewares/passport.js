@@ -13,6 +13,7 @@ passport.use('login', new Strategy({usernameField: "email"}, async (email, passw
         if (email === adminEmail && password === adminPassword) {
             const adminUser = {
                 email: email,
+                firstName: "Nombre Administrador",
                 rol: 'admin'
             }
             return done(null, adminUser)

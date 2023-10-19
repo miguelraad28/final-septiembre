@@ -104,18 +104,15 @@
                         <li class="nav-item">
                             <a id="aLogout" class="nav-link active" >Cerrar sesión</a>
                         </li>
-                        {{#if esUser}}
+                        {{#unless esAdmin }}
                             <li class="nav-item">
                                 <a class="nav-link active" href="/chat">Chat</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href='/carts/{{cartId}}'>Cart</a>
+                                <a class="nav-link active" href='/carts/{{user.cart}}'>Cart</a>
                             </li>
                         {{else}}
-                            <li class="nav-item">
-                                <a class="nav-link active" href='/products/create'>Crear Productos</a>
-                            </li>
-                        {{/if}}
+                        {{/unless}}
                     {{else}}
                         <li class="nav-item">
                             <a class="nav-link active" href='/login'>Iniciar sesión</a>

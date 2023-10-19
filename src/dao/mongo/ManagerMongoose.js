@@ -12,6 +12,11 @@ export class ManagerMongoose {
         return await this.collection.create(record);
     }
 
+    async readMany(filter){
+        const results = await this.collection.find(filter).lean()
+        return results
+    }
+
 
     async read(filter = {}) {
         if (Object.keys(filter).length === 0 && filter.constructor === Object) {
@@ -30,27 +35,31 @@ export class ManagerMongoose {
             }
         }
     }
-
-
-
-
-    async readAndPopulate(filter = {}) {
-    if (typeof filter === 'object' && !Array.isArray(filter)) {
-        const result = await this.collection.findOne(filter).populate('listProducts.productId').lean();
-        if (result) {
-            result._id = result._id.toString();
-            return [result]; // Devolver un array con un solo elemento
-        } else {
-            return []; // Devolver un array vacío si no hay resultado
-        }
-    } else {
-        const results = await this.collection.find(filter).populate('listProducts.productId').lean();
-        return results.map(result => {
-            result._id = result._id.toString();
-            return result;
-        });
-    }
+//     async readAndPopulate(filter = {}) {
+//     if (typeof filter === 'object' && !Array.isArray(filter)) {
+//         const result = await this.collection.findOne(filter).populate('listProducts.productId').lean()
+//         if (result) {
+//             result._id = result._id.toString()
+//             return [result]; // Devolver un array con un solo elemento
+//         } else {
+//             return []; // Devolver un array vacío si no hay resultado
+//         }
+//     } else {
+//         const results = await this.collection.find(filter).populate('listProducts.productId').lean();
+//         return results.map(result => {
+//             result._id = result._id.toString();
+//             return result;
+//         })
+//     }
+// }
+async readAndPopulate(filter = {}) {
+    const results = await this.collection.find(filter).populate('listProducts.productId').lean();
+    return results.map(result => {
+        result._id = result._id.toString();
+        return result;
+    });
 }
+
     async update(filter, updatedData) {
     const options = { new: true, upsert: false, multi: true };
 

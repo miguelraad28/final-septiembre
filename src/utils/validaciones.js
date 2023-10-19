@@ -1,4 +1,4 @@
-import {InvalidFormatError, InvalidIntegerError, InvalidLengthError, InvalidNumberError, InvalidStringError} from '../errors/errors.js'
+import {EmptyFieldError, InvalidFormatError, InvalidIntegerError, InvalidLengthError, InvalidNumberError, InvalidStringError} from '../errors/errors.js'
 
 export function validarEmail(valor) {
   if (!valor) throw new EmptyFieldError();

@@ -115,7 +115,6 @@ export async function productsDeleteController(req, res, next) {
         if (req.user._id == product.owner || req.user.rol == "admin") {
             if(product.owner != "admin"){
                 const owner = await userRepository.readDTO({_id: product.owner})
-                console.log(owner)
                 const mensaje = `<p>El producto ${product.title} fue eliminado</p>`
                 await mailer.send(owner.email, "Su producto fue eliminado", mensaje )
             }

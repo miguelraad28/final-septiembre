@@ -24,6 +24,9 @@ export const app = express()
 
 
 const hbs = exphbs.create()
+hbs.handlebars.registerHelper('reverse', function (array) {
+    return array.slice().reverse();
+});
 hbs.handlebars.registerHelper('hasDocument', function hasDocument(documents, documentType) {
     return documents.some(doc => doc.documento === documentType)
 });
