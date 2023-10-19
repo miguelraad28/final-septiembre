@@ -1,9 +1,8 @@
 <div class="container mt-5">
     <div class="row">
-        <!-- Columna del formulario -->
         <h1 class="text-center">Editar producto</h1>
         <div class="col-md-6">
-            <form id="editProductForm" class="mt-4" action="/api/products/{{product._id}}" method="POST" enctype="multipart/form-data">
+            <form id="editProductForm" class="mt-4" action="/api/products/{{product._id}}" method="PUT" enctype="multipart/form-data">
                 <input type="hidden" name="_method" value="PUT">
                 <input type="hidden" name="type" value="products">
                 <div class="form-group">
@@ -40,4 +39,3 @@
 </div>
 
 <script src="/js/editarProducto.js"></script>
-

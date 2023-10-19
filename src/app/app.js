@@ -26,10 +26,10 @@ export const app = express()
 const hbs = exphbs.create()
 hbs.handlebars.registerHelper('reverse', function (array) {
     return array.slice().reverse();
-});
+})
 hbs.handlebars.registerHelper('hasDocument', function hasDocument(documents, documentType) {
     return documents.some(doc => doc.documento === documentType)
-});
+})
 hbs.handlebars.registerHelper('isLastConnectionOld', function (last_connection) {
     const twoDaysAgo = new Date();
     twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);

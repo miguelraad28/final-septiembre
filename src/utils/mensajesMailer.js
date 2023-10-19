@@ -1,5 +1,5 @@
 export function mensajeCompraExitosa(order) {
-  return `
+    return `
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,4 +32,25 @@ export function mensajeCompraExitosa(order) {
 </html>
 
 `}
-export const mensajeProductoEliminado = ``
+
+
+export function mensajeProductoEliminado(product) {
+    return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producto Eliminado</title>
+</head>
+<body>
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif;">
+        <h1 style="text-align: center;">Producto Eliminado</h1>
+        <p>El producto "${product.title}" ha sido eliminado.</p>
+        <p>Si tienes alguna pregunta o inquietud, no dudes en contactarnos.</p>
+        <p>¡Que tengas un excelente día!</p>
+    </div>
+</body>
+</html>`
+}

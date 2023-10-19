@@ -1,4 +1,4 @@
-<div class="container mt-5">
+{{!-- <div class="container mt-5">
   <div class="row mt-4">
     <div class="col-md-4">
       <img src="/uploads/products/{{producto.thumbnail}}" class="img-fluid mb-4" alt="Producto">
@@ -20,4 +20,56 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
 <script src="/js/agregarAlCarrito.js"></script>
-<script src="/js/editarProducto.js"></script>
+<script src="/js/editarProducto.js"></script> --}}
+
+{{!-- 
+<p id="p{{this._id}}"></p>
+<button class="btn btn-primary btnAgregarAlCarrito" data-product-id="{{this._id}}">Agregar al carrito</button> --}}
+
+{{!-- <div class="card-footer">
+  <button class="btn btn-danger btn-sm btnDelete" data-product-id="{{this._id}}">Eliminar</button>
+  <button class="btn btn-primary btn-sm btnEditar" data-product-id="{{this._id}}">Editar</button>
+</div> --}}
+
+<div class="container mt-5">
+  <div class="row mt-4">
+    <div class="col-md-4">
+      <img src="/uploads/products/{{producto.thumbnail}}" class="img-fluid mb-4" alt="Producto">
+    </div>
+    <div class="col-md-8">
+      <h1 class="mb-4">{{producto.title}}</h1>
+      <p>Precio: {{producto.price}}</p>
+      <p>Descripcion:{{producto.description}}</p>
+      <p>SKU: {{producto.code}}</p>
+      <p>Stock: {{producto.stock}}</p>
+      {{#if esUser}}
+        <label for="cantidadInput">Cantidad:</label>
+        <input type="number" id="cantidadInput" name="cantidad" value="1" min="1" max="{{producto.stock}}">
+        <p id="p{{this._id}}"></p>
+        <button class="btn btn-primary btnAgregarAlCarrito" id="btnAgregarAlCarrito" data-product-id="{{producto._id}}">Agregar al carrito</button>
+      {{/if}}
+      {{#if esPremium}}
+        {{#if editar}}
+          <button class="btn btn-danger " id="btnEliminar" data-product-id="{{producto._id}}">Eliminar</button>
+        <button class="btn btn-warning " id="btnEditar" data-product-id="{{producto._id}}">Editar</button>
+        {{else}}
+          <label for="cantidadInput">Cantidad:</label>
+          <input type="number" id="cantidadInput" name="cantidad" value="1" min="1" max="{{producto.stock}}">
+          <button class="btn btn-primary btnAgregarAlCarrito" data-product-id="{{producto._id}}">Agregar al carrito</button>
+        {{/if}}
+      {{/if}}
+      {{#if esAdmin}}
+        <button class="btn btn-danger " id="btnEliminar" data-product-id="{{producto._id}}">Eliminar</button>
+        <button class="btn btn-warning " id="btnEditar" data-product-id="{{producto._id}}">Editar</button>
+      {{/if}}
+      <button type="button" class="btn btn-outline-primary">
+        <a href="/products?page={{productos.page}}&{{query}}" class="text-decoration-none text-reset">Volver a la lista de productos</a>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+<script src="/js/agregarAlCarrito.js"></script>
+<script src="/js/editarProducto.js"></script> 

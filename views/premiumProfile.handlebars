@@ -4,6 +4,9 @@
       <a class="nav-link active" id="mis-datos-tab" data-bs-toggle="tab" href="#mis-datos" role="tab" aria-controls="mis-datos" aria-selected="true">Mis Datos</a>
     </li>
     <li class="nav-item" role="presentation">
+      <a class="nav-link" data-bs-toggle="tab" href="#productos" aria-selected="false" role="tab">Crear Productos</a>
+    </li>
+    <li class="nav-item" role="presentation">
       <a class="nav-link" id="mis-compras-tab" data-bs-toggle="tab" href="#mis-compras" role="tab" aria-controls="mis-compras" aria-selected="false">Mis Compras</a>
     </li>
   </ul>
@@ -21,6 +24,43 @@
       </div>
     </div>
   </div>
+  <div class="tab-pane fade" id="productos" role="tabpanel">
+      <div class="container mt-5">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <h1 class="text-center">Crear producto nuevo</h1>
+            <form id="createProductForm" class="mt-4" action="/api/products" method="post" enctype="multipart/form-data">
+              <input type="hidden" name="type" value="products">
+              <div class="form-group">
+                <label for="titleInput">Title</label>
+                <input id="titleInput" type="text" class="form-control" name="title">
+              </div>
+              <div class="form-group">
+                <label for="descriptionInput">Description</label>
+                <input id="descriptionInput" type="text" class="form-control" name="description">
+              </div>
+              <div class="form-group">
+                <label for="priceInput">Price</label>
+                <input id="priceInput" type="number" class="form-control" name="price">
+              </div>
+              <div class="form-group">
+                <label for="thumbnailInput" class="form-label">Image</label>
+                <input type="file" name="thumbnail" id="thumbnailInput" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="codeInput">Code</label>
+                <input id="codeInput" type="text" class="form-control" name="code">
+              </div>
+              <div class="form-group">
+                <label for="stockInput">Stock</label>
+                <input id="stockInput" type="number" class="form-control" name="stock">
+              </div>
+              <button id="btnCreateProduct" class="btn btn-primary btn-block">Create</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   <div class="tab-pane fade" id="mis-compras" role="tabpanel" aria-labelledby="mis-compras-tab">
     <div class="container mt-5">
       <div class="row justify-content-center">

@@ -3,6 +3,7 @@ import crearProductoMock from '../../mocks/productoMock.js';
 import { Product } from '../../models/Product.js'
 import { productRepository, userRepository } from '../../repositories/index.js';
 import { mailer } from '../../utils/mailer.js';
+import { mensajeProductoEliminado } from '../../utils/mensajesMailer.js';
 
 export async function productsGetController(req, res, next) {
 
@@ -48,22 +49,17 @@ export async function productsGetOneController(req, res, next) {
 
 export async function productsPostController(req, res, next) {
     try {
-        // Si estás utilizando el modelo de producto, simplemente crea una instancia con los datos del formulario
         const product = new Product({
             title: req.body.title,
             description: req.body.description,
             price: Number(req.body.price),
-            thumbnail: req.file.filename, // Multer guarda el nombre del archivo en req.file.filename
+            thumbnail: req.file.filename,
             code: req.body.code,
             stock: Number(req.body.stock),
             owner: req.user._id || "admin"
-            // Otros campos que desees guardar en el producto
-        });
-
-        // Guardar el producto en la base de datos, aquí asumo que tienes un método llamado "registrar" en el repositorio
-        const productoRegistrado = await productRepository.registrar(product);
-
-        res.status(201).json(productoRegistrado);
+        })
+        await productRepository.registrar(product);
+        res.status(201).redirect('/profile')
     } catch (error) {
         req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`);
         next(error);
@@ -96,8 +92,8 @@ export async function productsPutController(req, res, next) {
             datosAActualizar.thumbnail = nuevoThumbnail
         }
         if (req.user._id == product.owner || req.user.rol == "admin") {
-            const productoActualizado = await productRepository.update(idProducto, datosAActualizar)
-            res.status(200).json(productoActualizado);
+            const actualizado = await productRepository.update(idProducto, datosAActualizar)
+            res.status(200).json(actualizado)
         } else {
             throw new Error("No tiene el permiso correspondiente");
         }
@@ -115,11 +111,10 @@ export async function productsDeleteController(req, res, next) {
         if (req.user._id == product.owner || req.user.rol == "admin") {
             if(product.owner != "admin"){
                 const owner = await userRepository.readDTO({_id: product.owner})
-                const mensaje = `<p>El producto ${product.title} fue eliminado</p>`
-                await mailer.send(owner.email, "Su producto fue eliminado", mensaje )
+                await mailer.send(owner.email, "Su producto fue eliminado", mensajeProductoEliminado(product) )
             }
-            await productRepository.delete({ _id: idProducto })
-            res.status(200)
+            const productoEliminado  = await productRepository.delete({ _id: idProducto })
+            res.status(200).json(productoEliminado)
         } else {
             //TODO
             throw new Error("no tiene el permiso correspondiente")

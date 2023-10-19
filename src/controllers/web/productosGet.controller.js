@@ -52,15 +52,19 @@ export async function productsGetOneController(req, res, next) {
     try {
         const id = req.params.pid
         const producto = await productRepository.read({_id: id})
+        let editar = false
+        if(req.user._id == producto.owner){
+            editar = true
+        }
         res.render('producto', {
             esUser: req.user.rol === "user" ? true : false,
-            esAdmin: req.user.rol === "admin" || req.user.rol === "premium" ? true : false,
-            user: req.user?.email,
-            rol: req.user?.rol,
+            esAdmin: req.user.rol === "admin" ? true : false,
+            esPremium: req.user.rol === "premium" ? true : false,
+            user: req.user,
             producto: producto,
             titulo: 'Producto',
             loggedIn: true,
-            cartId: req.user.cart
+            editar
         })
     } catch (error) {
         next(error)

@@ -1,14 +1,15 @@
-const socket = io();
+const socket = io()
+
+const btnAgregarAlCarrito = document.getElementById('btnAgregarAlCarrito')
 
 
-const btnAgregarAlCarrito = document.querySelectorAll('.btnAgregarAlCarrito');
-
-// Agregar evento 'click' a cada botón
-btnAgregarAlCarrito.forEach((btn) => {
-    btn.addEventListener('click', async () => {
+if (btnAgregarAlCarrito) {
+    btnAgregarAlCarrito.addEventListener('click', async () => {
+        const cantidadInput = document.getElementById('cantidadInput')
+        const cantidad = cantidadInput.value
         const datosACargar = {
-            idProducto: btn.getAttribute('data-product-id'),
-            cantidad: 1
+            idProducto: btnAgregarAlCarrito.getAttribute('data-product-id'),
+            cantidad: parseInt(cantidad) 
         }
         try {
             const response = await fetch('/api/carts', {
@@ -28,13 +29,12 @@ btnAgregarAlCarrito.forEach((btn) => {
             console.error(error)
         }
     })
-})
+}
 
 socket.on('carritoActualizado', datosCargados => {
-    const {cantidad, idProducto} = datosCargados
+    const { cantidad, idProducto } = datosCargados
     const pAgregado = document.getElementById(`p${idProducto}`)
     if (pAgregado) {
         pAgregado.innerHTML = `Agregado ${cantidad} al carrito.`
     }
 })
-

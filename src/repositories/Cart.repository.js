@@ -18,31 +18,31 @@ export default class CartRepository {
             throw new NotFoundError()}
         return result
     }
-
     async updateCart(filter, updatedData) {
         return await this.persistence.update(filter, updatedData)
     }
-
     async addProductToCart(cartId, product) {
         const { _id, cant } = product;
-
-        // Verificar si el carrito existe
         const cart = await this.showCart({ _id: cartId });
         if (!cart) {
             throw new NotFoundError()
         }
-        // Verificar si el producto ya está en el carrito
-
-        const existingProductIndex = cart[0].listProducts.findIndex(p => p.productId.toString() === _id);
+        const existingProductIndex = cart.findIndex((cartItem) => {
+            return cartItem.listProducts.some((product) => {
+                return product.productId._id.toString() === _id;
+            })
+        })
         if (existingProductIndex !== -1) {
-            // El producto existe en el carrito, incrementar la cantidad
-            cart.listProducts[existingProductIndex].cantidad += cant;
+            console.log("cantidad vieja")
+            console.log(cart[0].listProducts[existingProductIndex].cantidad)
+            cart[0].listProducts[existingProductIndex].cantidad += cant
+            console.log("cantidad nueva")
+            console.log(cart[0].listProducts[existingProductIndex].cantidad)
         } else {
-            // El producto no existe en el carrito, agregarlo
             cart[0].listProducts.push({
                 productId: _id,
                 cantidad: cant
-            });
+            })
         }
         // Actualizar el carrito en la base de datos
         const filter = { _id: cartId };
