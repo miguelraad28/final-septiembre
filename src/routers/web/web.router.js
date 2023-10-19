@@ -42,8 +42,8 @@ webRouter.get('/token/:token', (req, res) =>{
 
 webRouter.get('/premium',autenticacion, (req, res) =>{
     const uid = req.user._id
-    console.log(uid)
-    res.render('upload', {uid})
+    const esUser = req.user.rol == "user" ? true : false
+    res.render('upload', {title:"Cargar Archivos ", uid, loggedIn: true , esUser})
 })
 
 

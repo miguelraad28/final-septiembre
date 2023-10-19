@@ -5,6 +5,7 @@
 
 {{#if hayProductos}}
     {{#if esUser}}
+    <div class="container-cards-productos">
         {{#each productos.docs}}
             <div class="card border-dark mb-3" style="max-width: 20rem;">
                 <div class="card-header">{{this._id}}</div>
@@ -19,7 +20,9 @@
                 </div>
             </div>
         {{/each}}
+    </div>
     {{else if esAdmin }}
+    <div class="container-cards-productos">
         {{#each productos.docs}}
             <div class="card border-dark mb-3" style="max-width: 20rem;">
                 <div class="card-header">{{this._id}}</div>
@@ -34,16 +37,20 @@
                 </div>
             </div>
         {{/each}}
+    </div>
     {{/if}}
-
-    {{#if productos.hasPrevPage}}
-        <a href="/products?page={{productos.prevPage}}&{{query}}">Anterior</a>
-    {{/if}}
-
-    {{#if productos.hasNextPage}}
-        <a href="/products?page={{productos.nextPage}}&{{query}}">Siguiente</a>
-    {{/if}}
-
+    <div class="divPaginate">
+        {{#if productos.hasPrevPage}}
+        <button type="button" class="btn btn-outline-primary">
+            <a href="/products?page={{productos.prevPage}}&{{query}}">Anterior</a>
+        </button>
+        {{/if}}
+        {{#if productos.hasNextPage}}
+        <button type="button" class="btn btn-outline-primary">
+            <a href="/products?page={{productos.nextPage}}&{{query}}">Siguiente</a>
+        </button>
+        {{/if}}
+    </div>
 {{else}}
     <h2>no hay productos</h2>
 {{/if}}

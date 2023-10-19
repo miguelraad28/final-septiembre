@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://bootswatch.com/5/lux/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
     <title>{{titulo}}</title>
 </head>
 
@@ -19,31 +20,35 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Home
-                        <span class="visually-hidden">(current)</span>
-                    </a>
-                </li>
                 {{#if loggedIn}}
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Mi perfil</a>
+                    <li class="nav-item ">
+                        <a class="nav-link active" href="#">Mi perfil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/products">Productos</a>
+                        <a class="nav-link active" href="/products">Productos</a>
                     </li>
                     <li class="nav-item">
-                        <a id="aLogout" class="nav-link" >Cerrar sesion</a>
+                        <a id="aLogout" class="nav-link active" >Cerrar sesion</a>
                     </li>
                     {{#if esUser}}
                         <li class="nav-item">
-                            <a class="nav-link" href="/chat">Chat</a>
+                            <a class="nav-link active" href="/chat">Chat</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href='/carts/{{cartId}}'>Cart</a>
+                            <a class="nav-link active" href='/carts/{{cartId}}'>Cart</a>
                         </li>
+                        <a href="/premium">
+                            <button type="button" class="btn btn-warning">Pasate a Premium</button>
+                        </a>
+                        
                     {{else}}
                         <li class="nav-item">
-                            <a class="nav-link" href='/products/create'>Crear Productos</a>
+                            <a class="nav-link active" href='/products/create'>Crear Productos</a>
+                        </li>
+                        <li>
+                            <a href="/toUser">
+                                <button type="button" class="btn btn-warning">Pasate a User</button>
+                            </a>
                         </li>
                     {{/if}}
                 {{else}}

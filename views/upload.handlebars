@@ -4,7 +4,7 @@
   <input type="file" name="image">
   <button type="submit">upload</button>
 </form> --}}
-
+{{!-- 
 <form action="/api/users/{{uid}}/documents" method="POST" enctype="multipart/form-data">
   <input type="hidden" name="type" value="documents">
   <label for="identificacion">Identificación:</label>
@@ -22,4 +22,28 @@
   <button type="submit">Subir Imágenes</button>
 </form>
 
+--}}
+
+<div style="max-width: 400px; margin: 50px auto;">
+  <form action="/api/users/{{uid}}/documents" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="type" value="documents">
+
+    <div class="mb-3">
+      <label for="identificacion" class="form-label">Identificación:</label>
+      <input type="file" name="identificacion" id="identificacion" class="form-control">
+    </div>
+
+    <div class="mb-3">
+      <label for="domicilio" class="form-label">Comprobante de Domicilio:</label>
+      <input type="file" name="domicilio" id="domicilio" class="form-control">
+    </div>
+
+    <div class="mb-3">
+      <label for="estadoDeCuenta" class="form-label">Comprobante de Estado de Cuenta:</label>
+      <input type="file" name="estadoDeCuenta" id="estadoDeCuenta" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Subir Imágenes</button>
+  </form>
+</div>
 
