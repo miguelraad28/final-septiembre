@@ -1,4 +1,5 @@
 //import { productosService } from '../../services/productos.service.js'
+import { ForbiddenError } from '../../errors/errors.js';
 import crearProductoMock from '../../mocks/productoMock.js';
 import { Product } from '../../models/Product.js'
 import { productRepository, userRepository } from '../../repositories/index.js';
@@ -8,25 +9,21 @@ import { mensajeProductoEliminado } from '../../utils/mensajesMailer.js';
 export async function productsGetController(req, res, next) {
 
     try {
-        // Objeto vacío para el criterio de búsqueda inicial
-        let criterioDeBusqueda = {};
-
-        // Recorre el objeto req.query y agrega los criterios correspondientes al objeto de criterio de búsqueda
+        let criterioDeBusqueda = {}
         for (let key in req.query) {
             if (key === 'title' || key === 'description' || key === 'price' || key === 'stock') {
                 criterioDeBusqueda = { ...criterioDeBusqueda, [key]: req.query[key] };
             }
         }
-
         const opcionesDePaginacion = {
             limit: req.query.limit || 10,
             page: req.query.page || 1,
-            lean: true, // para que devuelva objetos literales, no de mongoose    
+            lean: true,
         }
         if (req.query.sort === 'asc') {
-            opcionesDePaginacion.sort = { price: 1 };
+            opcionesDePaginacion.sort = { price: 1 }
         } else if (req.query.sort === 'desc') {
-            opcionesDePaginacion.sort = { price: -1 };
+            opcionesDePaginacion.sort = { price: -1 }
         }
         const productos = await productRepository.paginate(criterioDeBusqueda, opcionesDePaginacion)
         res.status(200).json(productos)
@@ -95,7 +92,7 @@ export async function productsPutController(req, res, next) {
             const actualizado = await productRepository.update(idProducto, datosAActualizar)
             res.status(200).json(actualizado)
         } else {
-            throw new Error("No tiene el permiso correspondiente");
+            throw new ForbiddenError()
         }
     } catch (error) {
         req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`);
@@ -116,8 +113,7 @@ export async function productsDeleteController(req, res, next) {
             const productoEliminado  = await productRepository.delete({ _id: idProducto })
             res.status(200).json(productoEliminado)
         } else {
-            //TODO
-            throw new Error("no tiene el permiso correspondiente")
+            throw new ForbiddenError()
         }
     } catch (error) {
         req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`)

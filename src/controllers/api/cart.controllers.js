@@ -3,8 +3,6 @@ import { cartRepository, orderRepository } from '../../repositories/index.js'
 import { cartService } from '../../services/cart.service.js'
 import { checkoutService } from '../../services/checkout.service.js'
 
-
-
 export async function cartPostController(req, res, next) {
     try {
         const idNewCart = await cartRepository.createCart()
@@ -32,6 +30,7 @@ export async function cartPutController(req, res, next) {
 export async function cartConUserPutController(req, res, next) {
     try {
         const {idProducto, cantidad} = req.body
+        await cartService.checkOwner(req.user, idProducto)
         const carritoActualizado = await cartRepository.addProductToCart(req.user.cart, {_id : idProducto, cant: cantidad})
         res.status(200).json(carritoActualizado)
     } catch (error) {
@@ -60,8 +59,6 @@ export async function cartMostrarOrders(req, res, next) {
     }
 }
 
-
-
 export async function cartsGetController(req, res, next) {
     try {
         const criterio = {_id: req.params.cid} || {}
@@ -72,7 +69,6 @@ export async function cartsGetController(req, res, next) {
         next(error)
     }
 }
-
 
 export async function cartsDeleteProductsController(req, res, next) {
     try {
