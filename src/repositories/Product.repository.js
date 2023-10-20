@@ -34,17 +34,17 @@ export default class ProductRepository{
         let outOfStock = [];
         for (let i = 0; i < products.length; i++) {
             const product = products[i];
-            if (product.productId.stock < product.cantidad) {
+            if (product.productId.stock < product.quantity) {
                     outOfStock.push({
                         productId: product.productId._id,
-                        cantidad: product.cantidad,
+                        quantity: product.quantity,
                     })
                 } else {
-                    const updatedStock = product.productId.stock -= product.cantidad
+                    const updatedStock = product.productId.stock -= product.quantity
                     await this.persistence.update(product.productId._id, { stock: updatedStock});
                     withStock.push({
                     productId: product.productId._id,
-                    cantidad: product.cantidad
+                    quantity: product.quantity
                 })
             }
         }

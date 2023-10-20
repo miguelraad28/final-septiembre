@@ -9,7 +9,7 @@ if (tokenForm instanceof HTMLFormElement) {
             email : emailInput.value,
             password : passwordInput.value
         }
-        const token = window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1);
+        const token = window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1)
         fetch(`/api/users/${token} `, {
             method: 'PUT',
             body: JSON.stringify(user),

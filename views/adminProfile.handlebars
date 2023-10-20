@@ -37,8 +37,8 @@
                 <td>{{this.last_connection}}</td>
                 <td>
                   <div class="btn-group-vertical">
-                    <button type="button" id="btnModificar" class="btn btn-sm btn-outline-warning" data-user-id="{{this._id}}">Modificar rol</button>
-                    <button type="button" id="btnEliminar" class="btn btn-sm btn-outline-danger" data-user-id="{{this._id}}">Eliminar</button>
+                    <button type="button" id="btnModify" class="btn btn-sm btn-outline-warning" data-user-id="{{this._id}}">Modificar rol</button>
+                    <button type="button" id="btnDelete" class="btn btn-sm btn-outline-danger" data-user-id="{{this._id}}">Eliminar</button>
                   </div>
                 </td>
               </tr>
@@ -46,7 +46,7 @@
           </tbody>
         </table>
         <p>¿Desea eliminar usuarios a los que su última conexión fue hace más de dos días?</p>
-        <button id="btnDeleteUsers" class="btn btn-danger btn-sm btnEliminarUsuario">Eliminar</button>
+        <button id="btnDeleteUsers" class="btn btn-danger btn-sm btnDeleteUsuario">Eliminar</button>
       </div>
     </div>
     <div class="tab-pane fade" id="productos" role="tabpanel">
@@ -117,7 +117,7 @@
                       <thead>
                         <tr>
                           <th>Producto</th>
-                          <th>Cantidad</th>
+                          <th>quantity</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -128,7 +128,7 @@
                                 <img src="/uploads/products/{{this.productId.thumbnail}}" alt="img" class="img-fluid mr-2" style="max-height: 40px;">{{this.productId.title}}
                               </div>
                             </td>
-                            <td>{{this.cantidad}}</td>
+                            <td>{{this.quantity}}</td>
                           </tr>
                         {{/each}}
                       </tbody>
@@ -149,6 +149,5 @@
   </div>
 </div>
 
-<!-- Asegúrate de incluir los scripts de Bootstrap para que las pestañas funcionen correctamente -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script src="/js/deleteUsers.js" defer></script>

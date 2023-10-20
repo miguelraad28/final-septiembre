@@ -1,9 +1,9 @@
 import { validarNumeroEntero } from "../utils/validaciones.js";
 
 export class Cart {
-    constructor({idCarrito, idProducto, cantidad}) {
-        this.idCarrito = idCarrito,
-        this.idProducto = idProducto,
-        this.cantidad = validarNumeroEntero(cantidad)
+    constructor({idCart, productId, quantity}) {
+        this.idCart = idCart,
+        this.productId = productId,
+        this.quantity = validarNumeroEntero(quantity)
     }
 }

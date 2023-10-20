@@ -11,14 +11,14 @@ btnDeleteUsers.addEventListener("click", () => {
     }
   })
   .catch(error => {
-    console.error('Error al realizar la solicitud DELETE:', error);
+    console.error('Error al realizar la solicitud DELETE:', error)
   })
 })
 
 
-const btnModificar = document.querySelectorAll('.btn-outline-warning')
-const btnEliminar = document.querySelectorAll('.btn-outline-danger')
-    btnModificar.forEach((btn) => {
+const btnModify = document.querySelectorAll('.btn-outline-warning')
+const btnDelete = document.querySelectorAll('.btn-outline-danger')
+    btnModify.forEach((btn) => {
         btn.addEventListener('click', (event) => {
             const userId = event.target.dataset.userId;
             fetch(`/api/users/rol/${userId}`, {
@@ -38,7 +38,7 @@ const btnEliminar = document.querySelectorAll('.btn-outline-danger')
         })
     })
 
-    btnEliminar.forEach((btn) => {
+    btnDelete.forEach((btn) => {
         btn.addEventListener('click', (event) => {
             const userId = event.target.dataset.userId
             fetch(`/api/users/delete/${userId}`, {
@@ -53,8 +53,8 @@ const btnEliminar = document.querySelectorAll('.btn-outline-danger')
             })
             .catch((error) => {
                 // Todo
-                console.error('Error:', error);
-            });
-        });
-    });
+                console.error('Error:', error)
+            })
+        })
+    })
 

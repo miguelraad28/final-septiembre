@@ -21,4 +21,4 @@ export const loggerEnv = process.env.LOGGER
 
 //JWT
 
-export const JWT_SECRET = "S3CTR3T"
+export const JWT_SECRET = process.env.JWTSECRET

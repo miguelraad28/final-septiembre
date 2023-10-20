@@ -1,8 +1,8 @@
-const restablecerForm = document.getElementById('restablecerForm')
+const resetForm = document.getElementById('resetForm')
 const emailInput = document.getElementById('emailInput')
 
-if (restablecerForm instanceof HTMLFormElement) {
-    restablecerForm.addEventListener('submit', e => {
+if (resetForm instanceof HTMLFormElement) {
+    resetForm.addEventListener('submit', e => {
         e.preventDefault()
         const user = {
             email : emailInput.value,

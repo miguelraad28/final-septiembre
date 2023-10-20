@@ -14,10 +14,10 @@
                             <p>{{this.productId.description}}</p>
                             <p>${{this.productId.price}}</p>
                             <p>SKU: {{this.productId.code}}</p>
-                            <p>Cantidad: {{this.cantidad}}</p>
+                            <p>quantity: {{this.quantity}}</p>
                         </div>
                         <div class="col-md-2">
-                            <button class="btn btn-danger btnEliminarProductoDelCarrito" data-product-id="{{this.productId._id}}">Eliminar</button>
+                            <button class="btn btn-danger btnDeleteProductoDelCarrito" data-product-id="{{this.productId._id}}">Eliminar</button>
                         </div>
                     </div>
                 </li>
@@ -28,9 +28,9 @@
 </div>
 
 <div class="container mt-3">
-    <button id="finalizarCompra" data-cart-id="{{cart._id}}" class="btn btn-success">Realizar compra</button>
+    <button id="completePurchase" data-cart-id="{{cart._id}}" class="btn btn-success">Realizar compra</button>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
-<script src="/js/agregarAlCarrito.js"></script>
-<script src="/js/finalizarCompra.js"></script>
+<script src="/js/addToCart.js"></script>
+<script src="/js/completePurchase.js"></script>

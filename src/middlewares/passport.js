@@ -51,9 +51,9 @@ passport.use('github', new GithubStrategy({
 passport.serializeUser((user, next) => { next(null, user) })
 // passport.deserializeUser((user, next) => { next(null, user) })
 passport.deserializeUser((user, next) => {
-    const { password, ...userData } = user;
-    next(null, userData);
-});
+    const { password, ...userData } = user
+    next(null, userData)
+})
 
 // estos son para cargar en express como middlewares a nivel aplicacion
 export const passportInitialize = passport.initialize()
@@ -61,9 +61,9 @@ export const passportSession = passport.session()
 
 // estos son para cargar como middlewares antes de los controladores correspondientes
 // export const authenticateLocal = 
-export const autenticacionUserPass = passport.authenticate('login', { failWithError: true })
-export const autenticacionPorGithub = passport.authenticate('github', { scope: [ 'read:user' ] })
-export const autenticacionPorGithub_CB = passport.authenticate('github', { failWithError: true })
+export const autenticationUserPass = passport.authenticate('login', { failWithError: true })
+export const autenticationPorGithub = passport.authenticate('github', { scope: [ 'read:user' ] })
+export const autenticationPorGithub_CB = passport.authenticate('github', { failWithError: true })
 
 
 

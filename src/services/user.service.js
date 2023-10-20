@@ -98,7 +98,7 @@ class UserService {
       const updatedData = { $push: { documents: { $each: documentsToAdd } } };
       await userRepository.update(filter, updatedData);
 
-      // Verificar si la cantidad total de "documents" es 3 y cambiar "status" a true si es el caso
+      // Verificar si la quantity total de "documents" es 3 y cambiar "status" a true si es el caso
       const totalDocumentCount = currentDocumentCount + documentsToAdd.length;
       if (totalDocumentCount === 3) {
         const updateStatusData = { $set: { status: true } };

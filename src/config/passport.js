@@ -1,5 +1,5 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import dotenv from 'dotenv'
+dotenv.config()
 
 export const githubCallbackUrl = process.env.GITHUBCALLBACKURL
 export const githubClientId = process.env.GITHUBCLIENTEID

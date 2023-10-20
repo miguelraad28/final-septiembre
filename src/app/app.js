@@ -1,11 +1,10 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import { engine } from 'express-handlebars'
-import exphbs from 'express-handlebars';
+import exphbs from 'express-handlebars'
 import { Server } from 'socket.io'
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
-
 
 
 import { PORT } from '../config/servidor.js'
@@ -18,7 +17,6 @@ import { passportInitialize, passportSession } from '../middlewares/passport.js'
 import { EmptyFieldError, ForbiddenError, InvalidArgumentError, InvalidFormatError, InvalidIntegerError, InvalidLengthError, InvalidNumberError, InvalidStringError, NotFoundError, UnauthorizedError, UserExistsError } from '../errors/errors.js'
 import { winstonLogger } from '../utils/logger.js'
 import { logger } from '../middlewares/logger.js'
-import { multerMiddleware } from '../middlewares/multer.js'
 
 export const app = express()
 
@@ -40,10 +38,7 @@ app.engine('handlebars', engine())
 app.set('views', './views')
 app.set('view engine', 'handlebars')
 app.use(express.static('public'))
-
 app.use(express.urlencoded({ extended: true }))
-//app.use(multerMiddleware.single("image"))
-//app.use(multerMiddleware.array("image"))
 
 app.use(session({
     store: MongoStore.create({
@@ -63,8 +58,7 @@ app.use(logger)
 
 app.use('/api', apiRouter)
 app.use('/', webRouter)
-
- app.use((error, req, res, next) => {
+app.use((error, req, res, next) => {
      let h1, message;
 
      if (error instanceof NotFoundError) {

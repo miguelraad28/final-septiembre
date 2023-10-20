@@ -8,17 +8,17 @@ export async function productsGetController(req, res, next) {
                 criterioDeBusqueda = { ...criterioDeBusqueda, [key]: req.query[key] }
             }
         }
-        const opcionesDePaginacion = {
+        const optionsPagination = {
             limit: req.query.limit || 12,
             page: req.query.page || 1,
             lean: true 
         }
         if (req.query.sort === 'asc') {
-            opcionesDePaginacion.sort = { price: 1 }
+            optionsPagination.sort = { price: 1 }
         } else if (req.query.sort === 'desc') {
-            opcionesDePaginacion.sort = { price: -1 }
+            optionsPagination.sort = { price: -1 }
         }
-        const productos = await productRepository.paginate(criterioDeBusqueda, opcionesDePaginacion)
+        const productos = await productRepository.paginate(criterioDeBusqueda, optionsPagination)
         const queryParams = Object.keys(req.query)
             .filter(key => key !== 'page') // excluimos la propiedad "page"
             .map(key => `${key}=${req.query[key]}`)

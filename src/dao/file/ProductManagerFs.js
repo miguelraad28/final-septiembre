@@ -1,6 +1,6 @@
-import { NotFoundError } from "../../errors/errors.js";
-import Product from "./models/Product.js";
-import { readFile, writeFile } from "fs/promises";
+import { NotFoundError } from "../../errors/errors.js"
+import Product from "./models/Product.js"
+import { readFile, writeFile } from "fs/promises"
 class ProductManagerFS {
     _products
     _path
@@ -15,17 +15,17 @@ class ProductManagerFS {
             //  si la collection NO esta VACIA traemos los datos.
             if (data !== "") this._products = JSON.parse(data)
             if (this._products.find(_product => _product.code === newProduct.code)) {
-                return ({message:"Ya existe un producto con este código.", pending: true});
+                return ({message:"Ya existe un producto con este código.", pending: true})
             }else if(title === undefined || description === undefined || code === undefined || stock === undefined){
                 return({message: "Todos los campos (Menos status y thumbnail) son OBLIGATORIOS", pending: true})
             }else {
-                const product = new Product(title, description, price, thumbnail, code, stock, status);
+                const product = new Product(title, description, price, thumbnail, code, stock, status)
                 this._products.push(product);
-                await writeFile(this._path, JSON.stringify(this._products));
-                return ({message:"Producto creado", product: product});
+                await writeFile(this._path, JSON.stringify(this._products))
+                return ({message:"Producto creado", product: product})
             }
         } catch (error) {
-            console.error(error);
+            console.error(error)
         }
     }
 
@@ -98,4 +98,4 @@ class ProductManagerFS {
 }
 const productsManagerFile = new ProductManagerFS("./src/database/products.json")
 
-export {productsManagerFile};
+export {productsManagerFile}

@@ -2,8 +2,8 @@ import { cartRepository } from '../../repositories/index.js'
 
 export async function cartsGetController(req, res) {
     try {
-        const criterioDeBusqueda = {_id :req.params.cid}
-        const cart = await cartRepository.showCart(criterioDeBusqueda)
+        const criteria = {_id :req.params.cid}
+        const cart = await cartRepository.showCart(criteria)
         res.render('carts', {
             cart: cart[0],
             titulo: 'Cart',
@@ -12,7 +12,7 @@ export async function cartsGetController(req, res) {
             user: req.user
         });
     } catch (error) {
-        res.send('error:' + JSON.stringify(error));
+        res.send('error:' + JSON.stringify(error))
     }
 }
 

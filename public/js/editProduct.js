@@ -1,17 +1,16 @@
+const btnEdit = document.getElementById('btnEdit')
 
-const btnEditar = document.getElementById('btnEditar')
-
-if(btnEditar){
-    btnEditar.addEventListener("click", () => {
-    const idProducto = btnEditar.getAttribute('data-product-id')
-    window.location.replace(`/products/${idProducto}/edit`)
+if(btnEdit){
+    btnEdit.addEventListener("click", () => {
+    const productId = btnEdit.getAttribute('data-product-id')
+    window.location.replace(`/products/${productId}/edit`)
     })
 }
 
 
 
 
-const btnDelete = document.getElementById('btnEliminar')
+const btnDelete = document.getElementById('btnDelete')
 
 if(btnDelete){
     btnDelete.addEventListener("click", () => {
@@ -57,7 +56,7 @@ editProductForm?.addEventListener('submit', async (event) => {
         }
     } catch (error) {
         // TODO
-        console.error(error);
+        console.error(error)
     }
 })
 

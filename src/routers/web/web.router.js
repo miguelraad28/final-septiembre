@@ -3,7 +3,7 @@ import { cartRouter } from './cart.router.js'
 import { productosRouter } from './productos.router.js'
 import { auth } from '../../middlewares/auth.js'
 import { chatController } from '../../controllers/web/chat.controller.js'
-import { autenticacion } from '../../middlewares/autenticacion.js'
+import { autentication } from '../../middlewares/autentication.js'
 import { orderRepository, userRepository } from '../../repositories/index.js'
 import { loginController, orderGetController, profileGetController, registrarController, restablecerController, tokenController } from '../../controllers/web/user.controller.js'
 import { NotFoundError } from '../../errors/errors.js'
@@ -22,8 +22,8 @@ webRouter.get('/register', registrarController)
 webRouter.get('/login', loginController)
 webRouter.get('/restablecer', restablecerController)
 webRouter.get('/token/:token', tokenController)
-webRouter.get('/profile', autenticacion, profileGetController)
-webRouter.get('/order', autenticacion, orderGetController)
+webRouter.get('/profile', autentication, profileGetController)
+webRouter.get('/order', autentication, orderGetController)
 
 
 webRouter.get("*", (req,res,next)=>{

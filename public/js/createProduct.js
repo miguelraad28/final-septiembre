@@ -9,15 +9,15 @@ const btncreateProduct = document.getElementById('btnCreateProduct')
 
 if (createProductForm instanceof HTMLFormElement) {
     btncreateProduct.addEventListener('click', (event) => {
-        event.preventDefault() // Evitar que el formulario se envíe por defecto
+        event.preventDefault()
 
-        const product = new FormData() // Usar FormData en lugar de objeto literal
-        product.append('title', titleInput.value);
-        product.append('description', descriptionInput.value);
-        product.append('price', Number(priceInput.value));
-        product.append('thumbnail', thumbnailInput.files[0]); // Agregar la imagen al FormData
-        product.append('code', codeInput.value);
-        product.append('stock', Number(stockInput.value));
+        const product = new FormData()
+        product.append('title', titleInput.value)
+        product.append('description', descriptionInput.value)
+        product.append('price', Number(priceInput.value))
+        product.append('thumbnail', thumbnailInput.files[0])
+        product.append('code', codeInput.value)
+        product.append('stock', Number(stockInput.value))
 
         fetch('/api/products', {
             method: 'POST',
@@ -25,8 +25,8 @@ if (createProductForm instanceof HTMLFormElement) {
         })
             .then(result => {
                 if (result.status === 201) {
-                    window.location.replace('/products');
+                    window.location.replace('/products')
                 }
-            });
-    });
+            })
+    })
 }

@@ -10,24 +10,24 @@
       <p>SKU: {{producto.code}}</p>
       <p>Stock: {{producto.stock}}</p>
       {{#if esUser}}
-        <label for="cantidadInput">Cantidad:</label>
-        <input type="number" id="cantidadInput" name="cantidad" value="1" min="1" max="{{producto.stock}}">
+        <label for="quantityInput">quantity:</label>
+        <input type="number" id="quantityInput" name="quantity" value="1" min="1" max="{{producto.stock}}">
         <p id="p{{this._id}}"></p>
-        <button class="btn btn-primary btnAgregarAlCarrito" id="btnAgregarAlCarrito" data-product-id="{{producto._id}}">Agregar al carrito</button>
+        <button class="btn btn-primary addToCart" id="addToCart" data-product-id="{{producto._id}}">Agregar al carrito</button>
       {{/if}}
       {{#if esPremium}}
         {{#if editar}}
-          <button class="btn btn-danger " id="btnEliminar" data-product-id="{{producto._id}}">Eliminar</button>
-        <button class="btn btn-warning " id="btnEditar" data-product-id="{{producto._id}}">Editar</button>
+          <button class="btn btn-danger " id="btnDelete" data-product-id="{{producto._id}}">Eliminar</button>
+        <button class="btn btn-warning " id="btnEdit" data-product-id="{{producto._id}}">Editar</button>
         {{else}}
-          <label for="cantidadInput">Cantidad:</label>
-          <input type="number" id="cantidadInput" name="cantidad" value="1" min="1" max="{{producto.stock}}">
-          <button class="btn btn-primary btnAgregarAlCarrito" id="btnAgregarAlCarrito" data-product-id="{{producto._id}}">Agregar al carrito</button>
+          <label for="quantityInput">quantity:</label>
+          <input type="number" id="quantityInput" name="quantity" value="1" min="1" max="{{producto.stock}}">
+          <button class="btn btn-primary addToCart" id="addToCart" data-product-id="{{producto._id}}">Agregar al carrito</button>
         {{/if}}
       {{/if}}
       {{#if esAdmin}}
-        <button class="btn btn-danger " id="btnEliminar" data-product-id="{{producto._id}}">Eliminar</button>
-        <button class="btn btn-warning " id="btnEditar" data-product-id="{{producto._id}}">Editar</button>
+        <button class="btn btn-danger " id="btnDelete" data-product-id="{{producto._id}}">Eliminar</button>
+        <button class="btn btn-warning " id="btnEdit" data-product-id="{{producto._id}}">Editar</button>
       {{/if}}
       <button type="button" class="btn btn-outline-primary">
         <a href="/products?page={{productos.page}}&{{query}}" class="text-decoration-none text-reset">Volver a la lista de productos</a>
@@ -38,5 +38,5 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
-<script src="/js/agregarAlCarrito.js"></script>
-<script src="/js/editarProducto.js"></script> 
+<script src="/js/addToCart.js"></script>
+<script src="/js/editProduct.js"></script> 

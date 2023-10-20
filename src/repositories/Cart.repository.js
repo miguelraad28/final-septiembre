@@ -34,12 +34,12 @@ export default class CartRepository {
         })
         
         if (existingProductIndex !== -1) {
-            cart[0].listProducts[existingProductIndex].cantidad += cant
+            cart[0].listProducts[existingProductIndex].quantity += cant
 
         } else {
             cart[0].listProducts.push({
                 productId: _id,
-                cantidad: cant
+                quantity: cant
             })
         }
         // Actualizar el carrito en la base de datos

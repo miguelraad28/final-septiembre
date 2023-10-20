@@ -3,10 +3,10 @@ import { cartPostController,
         cartPutController,
         cartsGetController,
         cartsDeleteProductsController,
-        cartConUserPutController,
-        cartFinalizarCompra,
-        cartMostrarOrders} from '../../controllers/api/cart.controllers.js'
-import {autenticacion} from '../../middlewares/autenticacion.js'
+        cartWithUserPutController,
+        cartcompletePurchase,
+        cartShowOrders} from '../../controllers/api/cart.controllers.js'
+import {autentication} from '../../middlewares/autentication.js'
 export const cartRouter = Router()
 
 // POST
@@ -18,14 +18,14 @@ cartRouter.post('/', cartPostController) // crear carrito
 
 // listo     PUT api/carts/:cid deberá actualizar el carrito con un arreglo de productos con el formato especificado arriba.
 // cartRouter.put('/:cid', cartPutController) // cargar productos o modificar carrito
-// listo     PUT api/carts/:cid/products/:pid deberá poder actualizar SÓLO la cantidad de ejemplares del producto por cualquier cantidad pasada desde req.body
+// listo     PUT api/carts/:cid/products/:pid deberá poder actualizar SÓLO la quantity de ejemplares del producto por cualquier quantity pasada desde req.body
 //cartRouter.put('/:cid/products/:pid', cartPutController) // cargar productos o modificar carrito
 
-cartRouter.put('/', cartConUserPutController)
+cartRouter.put('/', cartWithUserPutController)
 
 // Implementar, en el router de carts, la ruta /:cid/purchase, la cual permitirá finalizar el proceso de compra de dicho carrito.
-cartRouter.post('/:cid/purchase', cartFinalizarCompra)
-cartRouter.get('/:cid/purchase',autenticacion ,cartMostrarOrders)
+cartRouter.post('/:cid/purchase', cartcompletePurchase)
+cartRouter.get('/:cid/purchase',autentication ,cartShowOrders)
 
 
 

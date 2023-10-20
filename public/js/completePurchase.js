@@ -1,8 +1,8 @@
-const finalizarComprabtn = document.getElementById("finalizarCompra")
+const completePurchaseButton = document.getElementById("completePurchase")
 
-const idCart =  finalizarComprabtn.getAttribute('data-cart-id')
+const idCart =  completePurchaseButton.getAttribute('data-cart-id')
 
-finalizarComprabtn.addEventListener("click", () => {
+completePurchaseButton.addEventListener("click", () => {
     fetch(`/api/carts/${idCart}/purchase`, {
         method: 'POST',
         headers: {

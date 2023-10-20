@@ -11,7 +11,7 @@ class CheckoutService {
         let amount = 0;
         for (const product of withStock) {
             const productFound = await productRepository.read({_id : product.productId});
-            const totalByProduct = productFound.price * product.cantidad;
+            const totalByProduct = productFound.price * product.quantity;
             amount += totalByProduct;
         }
         return amount;
@@ -23,23 +23,23 @@ class CheckoutService {
         }
     }
 
-    async generarTicket(idCarrito, productList) {
+    async generarTicket(idCart, productList) {
         const stock = await productRepository.checkStock(productList)
         if(stock.withStock){
             // creo ticket
             const precioTotal = await this.calculateAmount(stock.withStock)
-            const user = await userRepository.read({cart : idCarrito})
+            const user = await userRepository.read({cart : idCart})
             const emailUser = user.email
             const ticket = new Ticket(precioTotal, emailUser, stock.withStock)
             const order = await orderRepository.createOrder(ticket)
             // actualizo carrito
-            this.updateCart(idCarrito, stock)
+            this.updateCart(idCart, stock)
             return order
         }
     }
     
-    async finalizarCompra(idCarrito, productList) {
-        const order = await this.generarTicket(idCarrito, productList)
+    async completePurchase(idCart, productList) {
+        const order = await this.generarTicket(idCart, productList)
         await mailer.send(order.purchaser, "Compra exitosa", mensajeCompraExitosa(order) )
         return order
     }

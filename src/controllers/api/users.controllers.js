@@ -3,11 +3,11 @@ import { userService } from "../../services/user.service.js"
 
 export async function postUserController(req, res, next) {
     try {
-        await userService.create(req.body);
-        res.sendStatus(201);
+        await userService.create(req.body)
+        res.sendStatus(201)
     } catch (error) {
         req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`)
-        next(error);
+        next(error)
     }
 }
 
@@ -27,9 +27,9 @@ export async function putPasswordUsersController(req,res,next){
     try {
         const token = req.params.token
         const filter = {email: req.body.email}
-        const updatedData = req.body
-        const actualizado = await userService.updatePassword(filter, updatedData, token)
-        res.status(200).json(actualizado)
+        const dataToUpdate = req.body
+        const updated = await userService.updatePassword(filter, dataToUpdate, token)
+        res.status(200).json(updated)
     } catch (error) {
         req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`)
         next(error)
@@ -39,9 +39,9 @@ export async function putPasswordUsersController(req,res,next){
 export async function putRolUserController(req,res,next){
     try {
         const filter = {_id: req.params.uid}
-        const updatedData = {rol: "user"}
-        const actualizado = await userService.rolUpdate(filter, updatedData)
-        res.status(200).json(actualizado)
+        const dataToUpdate = {rol: "user"}
+        const updated = await userService.rolUpdate(filter, dataToUpdate)
+        res.status(200).json(updated)
     } catch (error) {
         req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`)
         next(error)
@@ -51,10 +51,10 @@ export async function putRolFromAdminUserController(req,res,next){
     try {
         const filter = {_id: req.params.uid}
         const user = await userRepository.readDTO(filter)
-        let updatedData
-        if(user.rol == "user"){updatedData = {rol: "premium"}}
-        else{updatedData = {rol: "user"}}
-        await userRepository.update(filter, updatedData)
+        let dataToUpdate
+        if(user.rol == "user"){dataToUpdate = {rol: "premium"}}
+        else{dataToUpdate = {rol: "user"}}
+        await userRepository.update(filter, dataToUpdate)
         res.status(200)
     } catch (error) {
         req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`)

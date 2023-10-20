@@ -9,7 +9,7 @@ export const cartManagerMongo = new ManagerMongoose('carts', {
             foreignField: '_id',
             required: true
         },
-        cantidad: {
+        quantity: {
             type: Number,
             required: true,
             min: 1

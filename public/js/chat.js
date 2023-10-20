@@ -1,22 +1,22 @@
 const socket = io()
 
 
-document.getElementById('btnNuevoMsg')?.addEventListener('click', ev => {
+document.getElementById('btnNewMessage')?.addEventListener('click', ev => {
     if (inputAlias.value && inputMensaje.value) {
         const message = {
             alias: inputAlias.value,
             message: inputMensaje.value,
         }
-        socket.emit('nuevoMensaje', message)
+        socket.emit('newMessage', message)
     }
 })
 
-document.getElementById('btnBorrarMsg')?.addEventListener('click', () => {
-    socket.emit('borrarMensajes')
+document.getElementById('btnDeleteMsg')?.addEventListener('click', () => {
+    socket.emit('deleteMessages')
 })
 
 const messagesTemplate = `
-{{#if hayMensajes}}
+{{#if hasMessages}}
 <ul>
     {{#each mensajes}}
     <li>{{this.alias}}: {{this.message}}</li>
@@ -27,14 +27,14 @@ no hay mensajes
 {{/if}}`
 
 
-const makeMensajesHtml = Handlebars.compile(messagesTemplate)
+const makeMessagesHtml = Handlebars.compile(messagesTemplate)
 
-socket.on('mensajes', mensajes => {
+socket.on('mensajes', messages => {
     const messagesDiv = document.getElementById('messages')
     if (messagesDiv) {
-        messagesDiv.innerHTML = makeMensajesHtml({
-            hayMensajes: mensajes.length > 0,
-            mensajes
+        messagesDiv.innerHTML = makeMessagesHtml({
+            hasMessages: messages.length > 0,
+            messages
         })
     }
 })

@@ -1,5 +1,5 @@
-import Cart from "./models/Cart.js";
-import { readFile, writeFile } from "fs/promises";
+import Cart from "./models/Cart.js"
+import { readFile, writeFile } from "fs/promises"
 class CartManager {
     _carts
     _path
@@ -10,12 +10,11 @@ class CartManager {
     async newCart() {
         try {
             const data = await readFile(this._path, "utf-8")
-            //  si la collection NO esta VACIA traemos los datos.
             if (data !== "") this._carts = JSON.parse(data)
-            const cart = new Cart();
-            this._carts.push(cart);
-            await writeFile(this._path, JSON.stringify(this._carts));
-            return ({ message: "Carrito creado", cart: cart });
+            const cart = new Cart()
+            this._carts.push(cart)
+            await writeFile(this._path, JSON.stringify(this._carts))
+            return ({ message: "Carrito creado", cart: cart })
         } catch (error) {
             console.error(error);
         }
@@ -65,4 +64,4 @@ class CartManager {
 }
 const cartsController = new CartManager("./src/database/carts.json")
 
-export { cartsController };
+export { cartsController }

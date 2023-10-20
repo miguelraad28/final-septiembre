@@ -1,27 +1,26 @@
 const socket = io()
 
-const btnAgregarAlCarrito = document.getElementById('btnAgregarAlCarrito')
+const addToCart = document.getElementById('addToCart')
 
 
-if (btnAgregarAlCarrito) {
-    btnAgregarAlCarrito.addEventListener('click', async () => {
-        console.log("agregando al carrito")
-        const cantidadInput = document.getElementById('cantidadInput')
-        const cantidad = cantidadInput.value
-        const datosACargar = {
-            idProducto: btnAgregarAlCarrito.getAttribute('data-product-id'),
-            cantidad: parseInt(cantidad) 
+if (addToCart) {
+    addToCart.addEventListener('click', async () => {
+        const quantityInput = document.getElementById('quantityInput')
+        const quantity = quantityInput.value
+        const dataToLoad = {
+            productId: addToCart.getAttribute('data-product-id'),
+            quantity: parseInt(quantity) 
         }
         try {
             const response = await fetch(`/api/carts`, {
                 method: 'PUT',
-                body: JSON.stringify(datosACargar),
+                body: JSON.stringify(dataToLoad),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
             if (response.ok) {
-                socket.emit('agregarAlCarrito', datosACargar)
+                socket.emit('agregarAlCarrito', dataToLoad)
             } else {
                 throw new Error(`Error al agregar el producto al carrito: ${response.status}`);
             }
@@ -34,9 +33,9 @@ if (btnAgregarAlCarrito) {
 
 
 
-const btnEliminarProductos = document.querySelectorAll('.btnEliminarProductoDelCarrito')
-const btnFinalizar = document.getElementById('finalizarCompra')
-btnEliminarProductos.forEach((btn) => {
+const btnDeleteProductos = document.querySelectorAll('.btnDeleteProductoDelCarrito')
+const btnFinalizar = document.getElementById('completePurchase')
+btnDeleteProductos.forEach((btn) => {
     btn.addEventListener('click', async () => {
         const cartId = btnFinalizar.getAttribute('data-cart-id')
         const productId = btn.getAttribute('data-product-id')
@@ -56,18 +55,10 @@ btnEliminarProductos.forEach((btn) => {
         })
     })
 
-
-
-
-
-
-
-
-
-socket.on('carritoActualizado', datosCargados => {
-    const { cantidad, idProducto } = datosCargados
-    const pAgregado = document.getElementById(`p${idProducto}`)
+socket.on('updatedCart', datosCargados => {
+    const { quantity, productId } = datosCargados
+    const pAgregado = document.getElementById(`p${productId}`)
     if (pAgregado) {
-        pAgregado.innerHTML = `Agregado ${cantidad} al carrito.`
+        pAgregado.innerHTML = `Agregado ${quantity} al carrito.`
     }
 })

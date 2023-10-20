@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker"
 import { Product } from "../models/Product.js"
 
-export default function crearProductoMock(){
+export default function createProductsMock(){
   return new Product({
     title : faker.commerce.productName(), 
     description : faker.commerce.productDescription(), 

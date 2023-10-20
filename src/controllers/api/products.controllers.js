@@ -1,32 +1,31 @@
-//import { productosService } from '../../services/productos.service.js'
 import { ForbiddenError } from '../../errors/errors.js';
-import crearProductoMock from '../../mocks/productoMock.js';
+import createProductsMock from '../../mocks/productoMock.js';
 import { Product } from '../../models/Product.js'
 import { productRepository, userRepository } from '../../repositories/index.js';
 import { mailer } from '../../utils/mailer.js';
-import { mensajeProductoEliminado } from '../../utils/mensajesMailer.js';
+import { deleteProductMessage } from '../../utils/mensajesMailer.js';
 
 export async function productsGetController(req, res, next) {
 
     try {
-        let criterioDeBusqueda = {}
+        let criteria = {}
         for (let key in req.query) {
             if (key === 'title' || key === 'description' || key === 'price' || key === 'stock') {
-                criterioDeBusqueda = { ...criterioDeBusqueda, [key]: req.query[key] };
+                criteria = { ...criteria, [key]: req.query[key] };
             }
         }
-        const opcionesDePaginacion = {
+        const optionsPagination = {
             limit: req.query.limit || 10,
             page: req.query.page || 1,
             lean: true,
         }
         if (req.query.sort === 'asc') {
-            opcionesDePaginacion.sort = { price: 1 }
+            optionsPagination.sort = { price: 1 }
         } else if (req.query.sort === 'desc') {
-            opcionesDePaginacion.sort = { price: -1 }
+            optionsPagination.sort = { price: -1 }
         }
-        const productos = await productRepository.paginate(criterioDeBusqueda, opcionesDePaginacion)
-        res.status(200).json(productos)
+        const products = await productRepository.paginate(criteria, optionsPagination)
+        res.status(200).json(products)
     } catch (error) {
         req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`)
         next(error)
@@ -35,8 +34,8 @@ export async function productsGetController(req, res, next) {
 
 export async function productsGetOneController(req, res, next) {
     try {
-        const producto = await productRepository.read({ _id: req.params.pid })
-        res.status(200).json(producto)
+        const product = await productRepository.read({ _id: req.params.pid })
+        res.status(200).json(product)
     } catch (error) {
         req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`)
         next(error)
@@ -65,13 +64,13 @@ export async function productsPostController(req, res, next) {
 
 export async function mockProductsPostController(req, res, next) {
     try {
-        const productosRegistrados = []
+        const registeredProducts = []
         for (let i = 0; i < 100; i++) {
-            const product = crearProductoMock()
-            const productoRegistrado = await productRepository.registrar(product)
-            productosRegistrados.push(productoRegistrado)
+            const product = createProductsMock()
+            const registredProduct = await productRepository.registrar(product)
+            registeredProducts.push(registredProduct)
         }
-        res.status(201).json(productosRegistrados)
+        res.status(201).json(registeredProducts)
     } catch (error) {
         req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`)
         next(error)
@@ -81,16 +80,16 @@ export async function mockProductsPostController(req, res, next) {
 
 export async function productsPutController(req, res, next) {
     try {
-        const idProducto = {_id: req.params.pid}
-        const datosAActualizar = req.body;
-        const product = await productRepository.read(idProducto)
+        const productId = {_id: req.params.pid}
+        const dataToUpdate = req.body;
+        const product = await productRepository.read(productId)
         if (req.file) {
             const nuevoThumbnail = req.file.filename
-            datosAActualizar.thumbnail = nuevoThumbnail
+            dataToUpdate.thumbnail = nuevoThumbnail
         }
         if (req.user._id == product.owner || req.user.rol == "admin") {
-            const actualizado = await productRepository.update(idProducto, datosAActualizar)
-            res.status(200).json(actualizado)
+            const updated = await productRepository.update(productId, dataToUpdate)
+            res.status(200).json(updated)
         } else {
             throw new ForbiddenError()
         }
@@ -103,15 +102,15 @@ export async function productsPutController(req, res, next) {
 
 export async function productsDeleteController(req, res, next) {
     try {
-        const idProducto = req.params.pid
-        const product = await productRepository.read({ _id: idProducto })
+        const productId = req.params.pid
+        const product = await productRepository.read({ _id: productId })
         if (req.user._id == product.owner || req.user.rol == "admin") {
             if(product.owner != "admin"){
                 const owner = await userRepository.readDTO({_id: product.owner})
-                await mailer.send(owner.email, "Su producto fue eliminado", mensajeProductoEliminado(product) )
+                await mailer.send(owner.email, "Su producto fue eliminado", deleteProductMessage(product) )
             }
-            const productoEliminado  = await productRepository.delete({ _id: idProducto })
-            res.status(200).json(productoEliminado)
+            const deletedProducts  = await productRepository.delete({ _id: productId })
+            res.status(200).json(deletedProducts)
         } else {
             throw new ForbiddenError()
         }

@@ -34,7 +34,7 @@ export function mensajeCompraExitosa(order) {
 `}
 
 
-export function mensajeProductoEliminado(product) {
+export function deleteProductMessage(product) {
     return `
 <!DOCTYPE html>
 <html lang="en">

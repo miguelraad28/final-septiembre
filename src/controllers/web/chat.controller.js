@@ -6,8 +6,8 @@ export async function chatController(req, res, next) {
             loggedIn: true,
             cartId: req.user.cart,
             user: req.user
-        });
+        })
     } catch (error) {
-        res.send('error:' + JSON.stringify(error));
+        res.send('error:' + JSON.stringify(error))
     }
 }
