@@ -64,34 +64,34 @@ app.use(logger)
 app.use('/api', apiRouter)
 app.use('/', webRouter)
 
-app.use((error, req, res, next) => {
-    let h1, message;
+// app.use((error, req, res, next) => {
+//     let h1, message;
 
-    if (error instanceof NotFoundError) {
-        h1 = 'Error 404 - Recurso no encontrado'
-        message = error.message;
-    } else if (error instanceof UnauthorizedError) {
-        h1 = 'Error de Autorización'
-        message = error.message;
-    } else if (error instanceof ForbiddenError) {
-        h1 = 'Error de Prohibición'
-        message = error.message;
-    } else if (error instanceof InvalidArgumentError || 
-                error instanceof InvalidIntegerError || 
-                error instanceof InvalidNumberError || 
-                error instanceof InvalidStringError || 
-                error instanceof EmptyFieldError || 
-                error instanceof InvalidFormatError || 
-                error instanceof InvalidLengthError || 
-                error instanceof UserExistsError) {
-        h1 = 'Error de Validación'
-        message = error.message
-    } else {
-        h1 = 'Error Interno del Servidor'
-        message = 'Ha ocurrido un error interno en el servidor.'
-    }
-    res.status(error.statusCode || 500).render('error', { title: "Error", h1, message });
-})
+//     if (error instanceof NotFoundError) {
+//         h1 = 'Error 404 - Recurso no encontrado'
+//         message = error.message;
+//     } else if (error instanceof UnauthorizedError) {
+//         h1 = 'Error de Autorización'
+//         message = error.message;
+//     } else if (error instanceof ForbiddenError) {
+//         h1 = 'Error de Prohibición'
+//         message = error.message;
+//     } else if (error instanceof InvalidArgumentError || 
+//                 error instanceof InvalidIntegerError || 
+//                 error instanceof InvalidNumberError || 
+//                 error instanceof InvalidStringError || 
+//                 error instanceof EmptyFieldError || 
+//                 error instanceof InvalidFormatError || 
+//                 error instanceof InvalidLengthError || 
+//                 error instanceof UserExistsError) {
+//         h1 = 'Error de Validación'
+//         message = error.message
+//     } else {
+//         h1 = 'Error Interno del Servidor'
+//         message = 'Ha ocurrido un error interno en el servidor.'
+//     }
+//     res.status(error.statusCode || 500).render('error', { title: "Error", h1, message });
+// })
 
 
 

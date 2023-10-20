@@ -1,3 +1,5 @@
+import { orderRepository, userRepository } from "../../repositories/index.js"
+
 export function registrarController(req, res) {
   try {
     res.render('register', {title: "Registrarse"})
@@ -42,7 +44,7 @@ export async function profileGetController(req, res, next) {
       let orders
       switch(rol){
           case 'admin' :
-          const users = await userRepository.readDTO();
+          const users = await userRepository.readDTO({})
           orders = await orderRepository.read()
           res.render('adminProfile', {
               title: 'Admin Profile',

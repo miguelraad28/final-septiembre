@@ -13,7 +13,6 @@ export default class UserRepository{
     async readDTO(filter) {
         const result = await this.persistence.read(filter)
         if (Array.isArray(result)) {
-            // Si el resultado es un array, excluimos el campo "password" de cada objeto
             return result.map(obj => {
                 if (obj.password) {
                     delete obj.password
@@ -21,13 +20,11 @@ export default class UserRepository{
                 return obj
             })
         } else if (result && typeof result === 'object') {
-            // Si el resultado es un solo objeto, excluimos el campo "password" del objeto
             if (result.password) {
                 delete result.password;
             }
             return result;
         } else {
-            // Si no se encontraron resultados, devolvemos un array vacío o null según sea el caso
             return Array.isArray(result) ? [] : null;
         }
     }

@@ -22,7 +22,7 @@ webRouter.get('/register', registrarController)
 webRouter.get('/login', loginController)
 webRouter.get('/restablecer', restablecerController)
 webRouter.get('/token/:token', tokenController)
-webRouter.get('/profile',autenticacion, profileGetController)
+webRouter.get('/profile', autenticacion, profileGetController)
 webRouter.get('/order', autenticacion, orderGetController)
 
 
