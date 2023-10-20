@@ -55,8 +55,7 @@ export async function productsPostController(req, res, next) {
             stock: Number(req.body.stock),
             owner: req.user._id || "admin"
         })
-        const producto = await productRepository.registrar(product);
-        req.logger.info("producto creado" + producto)
+        await productRepository.registrar(product)
         res.status(201).redirect('/profile')
     } catch (error) {
         req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`);
