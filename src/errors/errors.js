@@ -16,11 +16,9 @@ export class InvalidArgumentError extends Error {
     }
 }
 
-
-
 export class UnauthorizedError extends Error {
     constructor() {
-        super('Acceso no autorizado')
+        super('Acceso no autorizado. Debe iniciar sesión para acceder a esta página.')
         this.name = 'UnauthorizedError'
         this.statusCode = 401
         this.date = new Date().toLocaleTimeString()
@@ -35,7 +33,6 @@ export class ForbiddenError extends Error {
         this.date = new Date().toLocaleTimeString()
     }
 }
-
 export class InvalidIntegerError extends Error {
     constructor() {
         super('Tiene que ingresar un número entero')
@@ -44,7 +41,6 @@ export class InvalidIntegerError extends Error {
         this.date = new Date().toLocaleTimeString()
     }
 }
-
 export class InvalidNumberError extends Error {
     constructor() {
         super('Tiene que ingresar un número')
@@ -53,7 +49,6 @@ export class InvalidNumberError extends Error {
         this.date = new Date().toLocaleTimeString()
     }
 }
-
 export class InvalidStringError extends Error {
     constructor() {
         super('El campo debe ser una cadena de caracteres')
@@ -62,7 +57,6 @@ export class InvalidStringError extends Error {
         this.date = new Date().toLocaleTimeString()
     }
 }
-
 export class EmptyFieldError extends Error {
     constructor() {
         super('El campo no puede estar vacío')
@@ -81,7 +75,6 @@ export class InvalidFormatError extends Error {
         this.date = new Date().toLocaleTimeString()
     }
 }
-
 export class InvalidLengthError extends Error {
     constructor() {
         super('La longitud no es válida')
@@ -90,7 +83,6 @@ export class InvalidLengthError extends Error {
         this.date = new Date().toLocaleTimeString()
     }
 }
-
 export class UserExistsError extends Error {
     constructor() {
         super('El usuario ya existe');

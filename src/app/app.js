@@ -61,34 +61,8 @@ app.use(passportInitialize, passportSession)
 
 app.use(logger)
 
-
-// app.use((error, req, res, next) => {
-//     if (error instanceof NotFoundError) {
-//         res.status(error.statusCode).json({ error: error.message })
-//     } else if (error instanceof InvalidArgumentError) {
-//         res.status(error.statusCode).json({ error: error.message })
-//     } else if (error instanceof UnauthorizedError) {
-//         res.status(error.statusCode).json({ error: error.message })
-//     } else if (error instanceof ForbiddenError) {
-//         res.status(error.statusCode).json({ error: error.message })
-//     } else if (error instanceof InvalidIntegerError) {
-//         res.status(error.statusCode).json({ error: error.message })
-//     } else if (error instanceof InvalidNumberError) {
-//         res.status(error.statusCode).json({ error: error.message })
-//     } else if (error instanceof InvalidStringError) {
-//         res.status(error.statusCode).json({ error: error.message })
-//     } else if (error instanceof EmptyFieldError) {
-//         res.status(error.statusCode).json({ error: error.message })
-//     } else if (error instanceof InvalidFormatError) {
-//         res.status(error.statusCode).json({ error: error.message })
-//     } else if (error instanceof InvalidLengthError) {
-//         res.status(error.statusCode).json({ error: error.message })
-//     } else if (error instanceof UserExistsError) {
-//         res.status(error.statusCode).json({ error: error.message })
-//     } else {
-//         res.status(500).json({ error: 'Error interno del servidor' })
-//     }
-// })
+app.use('/api', apiRouter)
+app.use('/', webRouter)
 
 app.use((error, req, res, next) => {
     let h1, message;
@@ -103,26 +77,25 @@ app.use((error, req, res, next) => {
         h1 = 'Error de Prohibición'
         message = error.message;
     } else if (error instanceof InvalidArgumentError || 
-               error instanceof InvalidIntegerError || 
-               error instanceof InvalidNumberError || 
-               error instanceof InvalidStringError || 
-               error instanceof EmptyFieldError || 
-               error instanceof InvalidFormatError || 
-               error instanceof InvalidLengthError || 
-               error instanceof UserExistsError) {
+                error instanceof InvalidIntegerError || 
+                error instanceof InvalidNumberError || 
+                error instanceof InvalidStringError || 
+                error instanceof EmptyFieldError || 
+                error instanceof InvalidFormatError || 
+                error instanceof InvalidLengthError || 
+                error instanceof UserExistsError) {
         h1 = 'Error de Validación'
         message = error.message
     } else {
         h1 = 'Error Interno del Servidor'
         message = 'Ha ocurrido un error interno en el servidor.'
     }
-    res.status(error.statusCode || 500).render('/errors/errors', { title: "Error", h1, message });
+    res.status(error.statusCode || 500).render('error', { title: "Error", h1, message });
 })
 
 
 
-app.use('/api', apiRouter)
-app.use('/', webRouter)
+
 
 
 await mongoose.connect(MONGODB_CNX_STR)
