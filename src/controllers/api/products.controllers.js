@@ -55,7 +55,7 @@ export async function productsPostController(req, res, next) {
             stock: Number(req.body.stock),
             owner: req.user._id || "admin"
         })
-        console.log(product)
+        req.logger.info(product)
         await productRepository.registrar(product);
         res.status(201).redirect('/profile')
     } catch (error) {
