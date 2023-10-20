@@ -5,6 +5,7 @@ const btnAgregarAlCarrito = document.getElementById('btnAgregarAlCarrito')
 
 if (btnAgregarAlCarrito) {
     btnAgregarAlCarrito.addEventListener('click', async () => {
+        console.log("agregando al carrito")
         const cantidadInput = document.getElementById('cantidadInput')
         const cantidad = cantidadInput.value
         const datosACargar = {
