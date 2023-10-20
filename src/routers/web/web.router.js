@@ -111,18 +111,18 @@ webRouter.get('/profile',autenticacion, profileGetController)
 
 async function orderGetController(req, res, next) {
     try {
-        let orders
-        if(req.user.rol == "admin"){
-        }else{
-            orders = await orderRepository.read({purchaser: req.user.email})
-        }
+        const orders = await orderRepository.read({purchaser: req.user.email})
+        orders.sort((a, b) => new Date(b.purchase_dateTime) - new Date(a.purchase_dateTime))
+        const order = orders[0]
+        console.log(order)
             res.render('order', {
                 title: 'Orden de compra',
                 user: req.user,
                 loggedIn: true,
                 esUser: req.user.rol === "user" ? true : false,
-                esAdmin: req.user.rol === "admin" || req.user.rol === "premium" ? true : false,
-                orders
+                esAdmin: req.user.rol === "admin" ? true: false,
+                esPremium: req.user.rol === "premium" ? true : false,
+                order
             })
         } catch (error) {next(error)}
 }

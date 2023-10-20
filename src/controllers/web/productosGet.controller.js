@@ -1,5 +1,4 @@
-import { productRepository } from '../../repositories/index.js';
-//import { productosService } from '../../services/productos.service.js'
+import { productRepository } from '../../repositories/index.js'
 
 export async function productsGetController(req, res, next) {
 
@@ -15,32 +14,25 @@ export async function productsGetController(req, res, next) {
             page: req.query.page || 1,
             lean: true 
         }
-
         if (req.query.sort === 'asc') {
             opcionesDePaginacion.sort = { price: 1 };
         } else if (req.query.sort === 'desc') {
             opcionesDePaginacion.sort = { price: -1 };
         }
-        
         const productos = await productRepository.paginate(criterioDeBusqueda, opcionesDePaginacion)
-
         const queryParams = Object.keys(req.query)
             .filter(key => key !== 'page') // excluimos la propiedad "page"
             .map(key => `${key}=${req.query[key]}`)
-            .join('&');
-
+            .join('&')
         res.render('productos', {
             esUser: req.user.rol === "user" ? true : false,
             esAdmin: req.user.rol === "admin" ? true : false,
             esPremium: req.user.rol === "premium" ? true : false,
-            //user: req.user?.email,
-            //rol: req.user?.rol,
             query: queryParams,
             productos: productos,
             hayProductos: productos.docs.length > 0,
             titulo: 'Productos',
             loggedIn: true,
-            //cartId: req.user.cart,
             user: req.user
         })
     } catch (error) {

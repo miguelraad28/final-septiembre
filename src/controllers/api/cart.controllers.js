@@ -43,7 +43,7 @@ export async function cartFinalizarCompra(req, res, next) {
     try {
         const cart = await cartRepository.showCart({_id : req.params.cid})
         const finalizar = await checkoutService.finalizarCompra(cart[0]._id, cart[0].listProducts)
-        res.status(201).json(finalizar);
+        res.status(201).json(finalizar)
     } catch (error) {
         req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`)
         next(error)
