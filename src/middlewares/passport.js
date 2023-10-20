@@ -37,7 +37,7 @@ passport.use('github', new GithubStrategy({
     let user
         user = {
                 firstName: profile.userName,
-                lastName:  "Apellido",
+                lastName:  "Github",
                 email:  profile.email ?? "user.github@gmail.com",
                 age:  18,
                 password:  "1234",

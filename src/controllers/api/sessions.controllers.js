@@ -6,7 +6,9 @@ export function getCurrentSessionController(req, res, next) {
 }
 
 export async function logoutSessionsController(req, res, next) {
+    
     if(req.user.rol != "admin"){
+        console.log(req.user)
         const filter = {_id: req.user}
         const dataToUpdate = {last_connection: new Date()}
         await userRepository.update(filter, dataToUpdate)
