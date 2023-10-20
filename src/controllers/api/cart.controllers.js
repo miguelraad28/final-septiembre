@@ -77,7 +77,7 @@ export async function cartsGetController(req, res, next) {
 export async function cartsDeleteProductsController(req, res, next) {
     try {
         const idDelProducto = req.params.pid || null
-        const carritoActualizado = await cartRepository.removeProductsFromCart(req.params.cid, idDelProducto)
+        const carritoActualizado = await cartRepository.removeProducts(req.params.cid, idDelProducto)
         res.status(200).json(carritoActualizado)
     } catch (error) {
         req.logger.error(`message: ${error.message} - ${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`)

@@ -32,12 +32,10 @@ export default class CartRepository {
                 return product.productId._id.toString() === _id;
             })
         })
+        
         if (existingProductIndex !== -1) {
-            console.log("cantidad vieja")
-            console.log(cart[0].listProducts[existingProductIndex].cantidad)
             cart[0].listProducts[existingProductIndex].cantidad += cant
-            console.log("cantidad nueva")
-            console.log(cart[0].listProducts[existingProductIndex].cantidad)
+
         } else {
             cart[0].listProducts.push({
                 productId: _id,

@@ -17,9 +17,9 @@ cartRouter.post('/', cartPostController) // crear carrito
 //PUT
 
 // listo     PUT api/carts/:cid deberá actualizar el carrito con un arreglo de productos con el formato especificado arriba.
-cartRouter.put('/:cid', cartPutController) // cargar productos o modificar carrito
+// cartRouter.put('/:cid', cartPutController) // cargar productos o modificar carrito
 // listo     PUT api/carts/:cid/products/:pid deberá poder actualizar SÓLO la cantidad de ejemplares del producto por cualquier cantidad pasada desde req.body
-cartRouter.put('/:cid/products/:pid', cartPutController) // cargar productos o modificar carrito
+//cartRouter.put('/:cid/products/:pid', cartPutController) // cargar productos o modificar carrito
 
 cartRouter.put('/', cartConUserPutController)
 

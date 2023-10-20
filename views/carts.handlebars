@@ -1,65 +1,36 @@
-{{!-- 
-<a href="token/">restablecer</a>
-
-
-<h1>{{#if sonVarios}}Detalles de los carritos
-    {{else}}Detalles del carrito{{/if}}</h1>
-
-    {{#each carts}}
-    <h2>{{carts}}</h2>
-        <h2>ID del carrito: {{this._id}}</h2>
-        <ul>
-            {{#each this.listProducts}}
-                <li>
-                    <p>ID del producto: {{this.productId._id}}</p>
-                    <p>Nombre del producto: {{this.productId.title}}</p>
-                    <p>Descripción del producto: {{this.productId.description}}</p>
-                    <p>Precio del producto: {{this.productId.price}}</p>
-                    <p>Imagen del producto: {{this.productId.thumbnail}}</p>
-                    <p>Código del producto: {{this.productId.code}}</p>
-                    <p>Stock del producto: {{this.productId.stock}}</p>
-                    <p>Cantidad: {{this.cantidad}}</p>
-                </li>
-            {{/each}}
-        </ul>
-    {{/each}}
-
-
-<button id="finalizarCompra" data-cart-id="{{cartId}}">Realizar compra</button>
-<script src="/js/finalizarCompra.js"></script>  --}}
-
-    <div class="container mt-5">
-        <h1>{{#if sonVarios}}Detalles de los carritos{{else}}Detalles del carrito{{/if}}</h1>
-
-        {{#each carts}}
-        <div class="card mt-3">
-            <div class="card-body">
-                <ul class="list-group">
-                    {{#each this.listProducts}}
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <img src="/uploads/products/{{this.productId.thumbnail}}" alt="{{this.productId.title}}" class="img-thumbnail">
-                            </div>
-                            <div class="col-md-10">
-                                <p>{{this.productId.title}}</p>
-                                <p>{{this.productId.description}}</p>
-                                <p>${{this.productId.price}}</p>
-                                <p>SKU :{{this.productId.code}}</p>
-                                <p>Cantidad: {{this.cantidad}}</p>
-                            </div>
+<div class="container mt-5">
+    <h1>Detalles del carrito</h1>
+    <div class="card mt-3">
+        <div class="card-body">
+            <ul class="list-group">
+                {{#each cart.listProducts}}
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img src="/uploads/products/{{this.productId.thumbnail}}" alt="{{this.productId.title}}" class="img-thumbnail">
                         </div>
-                    </li>
-                    {{/each}}
-                </ul>
-            </div>
+                        <div class="col-md-8">
+                            <p>{{this.productId.title}}</p>
+                            <p>{{this.productId.description}}</p>
+                            <p>${{this.productId.price}}</p>
+                            <p>SKU: {{this.productId.code}}</p>
+                            <p>Cantidad: {{this.cantidad}}</p>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-danger btnEliminarProductoDelCarrito" data-product-id="{{this.productId._id}}">Eliminar</button>
+                        </div>
+                    </div>
+                </li>
+                {{/each}}
+            </ul>
         </div>
-        {{/each}}
     </div>
+</div>
 
-    <div class="container mt-3">
-        {{!-- <a class="btn btn-outline-danger" id="btnRestablecer" data-cart-id="{{cartId}}">Restablecer</a> --}}
-        <button id="finalizarCompra" data-cart-id="{{cartId}}" class="btn btn-success">Finalizar compra</button>
-    </div>
+<div class="container mt-3">
+    <button id="finalizarCompra" data-cart-id="{{cart._id}}" class="btn btn-success">Realizar compra</button>
+</div>
 
-    <script src="/js/finalizarCompra.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/agregarAlCarrito.js"></script>
+<script src="/js/finalizarCompra.js"></script>

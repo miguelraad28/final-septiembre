@@ -3,9 +3,10 @@ import { productRepository,} from "../repositories/index.js";
 
 
 class CartService {
-    async checkOwner(user, idDelProducto) {
-      const producto = await productRepository.read({_id : idDelProducto})
-      if(producto.owner == user._id){
+    async checkOwner(idUser, idDelProducto) {
+      const filter = {_id: idDelProducto}
+      const producto = await productRepository.read(filter)
+      if(producto.owner == idUser){
         throw new Error("No se pueden agregar al carrito productos creados por ud mismo")
       }
     }

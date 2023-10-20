@@ -12,7 +12,7 @@ if (btnAgregarAlCarrito) {
             cantidad: parseInt(cantidad) 
         }
         try {
-            const response = await fetch('/api/carts', {
+            const response = await fetch(`/api/carts`, {
                 method: 'PUT',
                 body: JSON.stringify(datosACargar),
                 headers: {
@@ -30,6 +30,38 @@ if (btnAgregarAlCarrito) {
         }
     })
 }
+
+
+
+const btnEliminarProductos = document.querySelectorAll('.btnEliminarProductoDelCarrito')
+const btnFinalizar = document.getElementById('finalizarCompra')
+btnEliminarProductos.forEach((btn) => {
+    btn.addEventListener('click', async () => {
+        const cartId = btnFinalizar.getAttribute('data-cart-id')
+        const productId = btn.getAttribute('data-product-id')
+            const url = `/api/carts/${cartId}/products/${productId}`
+        try {
+            const response = await fetch(url, {
+                method: 'DELETE'
+            })
+            if (response.ok) {
+                window.location.reload()
+            } else {
+                console.error(`Error al eliminar el producto del carrito: ${response.status}`)
+            }
+        } catch (error) {
+            console.error(error)
+        }
+        })
+    })
+
+
+
+
+
+
+
+
 
 socket.on('carritoActualizado', datosCargados => {
     const { cantidad, idProducto } = datosCargados

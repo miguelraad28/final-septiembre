@@ -7,6 +7,6 @@ export const cartRouter = Router()
 // listo !  Además, agregar una vista en ‘/carts/:cid (cartId) para visualizar un carrito específico,
 // donde se deberán listar SOLO los productos que pertenezcan a dicho carrito. 
 cartRouter.get("/:cid",autenticacion, cartsGetController)
-cartRouter.get("/",autenticacion, cartsGetController)
+//cartRouter.get("/",autenticacion, cartsGetController)
 
 

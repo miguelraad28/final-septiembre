@@ -116,7 +116,6 @@ async function orderGetController(req, res, next) {
         }else{
             orders = await orderRepository.read({purchaser: req.user.email})
         }
-        console.log(orders)
             res.render('order', {
                 title: 'Orden de compra',
                 user: req.user,

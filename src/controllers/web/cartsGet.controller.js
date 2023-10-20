@@ -2,13 +2,11 @@ import { cartRepository } from '../../repositories/index.js'
 
 export async function cartsGetController(req, res) {
     try {
-        const criterioDeBusqueda = {"_id" :req.params.cid} || {};
-        const carts = await cartRepository.showCart(criterioDeBusqueda);
+        const criterioDeBusqueda = {_id :req.params.cid}
+        const cart = await cartRepository.showCart(criterioDeBusqueda)
         res.render('carts', {
-            esUser: req.user.rol == "user" ? true : false,
-            sonVarios: carts.length > 1 ? true : false ,
-            carts: carts,
-            titulo: 'Carts',
+            cart: cart[0],
+            titulo: 'Cart',
             loggedIn: true,
             cartId: req.user.cart,
             user: req.user
