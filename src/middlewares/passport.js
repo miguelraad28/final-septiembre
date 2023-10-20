@@ -39,7 +39,7 @@ passport.use('github', new GithubStrategy({
             email: profile.email ?? profile.username,
             rol: "user"
         }
-        await userRepository.crear(user)
+        await userRepository.create(user)
     done(null, user)
 }))
 
