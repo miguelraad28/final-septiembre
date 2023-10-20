@@ -3,6 +3,7 @@ import { userService } from "../../services/user.service.js"
 
 export async function postUserController(req, res, next) {
     try {
+        console.log(req.body)
         await userService.create(req.body)
         res.sendStatus(201)
     } catch (error) {

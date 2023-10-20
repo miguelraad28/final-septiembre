@@ -36,8 +36,12 @@ passport.use('github', new GithubStrategy({
 }, async (accessToken, refreshToken, profile, done) => {
     let user
         user = {
-            email: profile.email ?? profile.username,
-            rol: "user"
+                firstName: profile.userName,
+                lastName:  "Apellido",
+                email:  profile.email ?? "user.github@gmail.com",
+                age:  18,
+                password:  "1234",
+                rol:  "user",
         }
         await userRepository.create(user)
     done(null, user)
