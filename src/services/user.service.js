@@ -24,7 +24,7 @@ class UserService {
       cart: CartId,
       rol
     }
-    await userRepository.create(userToCreate)
+    return await userRepository.create(userToCreate)
   }
   async updatePassword(filter, updatedData, token){
     let resetToken

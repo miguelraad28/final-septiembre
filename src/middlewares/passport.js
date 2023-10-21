@@ -44,8 +44,9 @@ passport.use('github', new GithubStrategy({
                 password:  hashear("1234"),
                 rol:  "user"
         }
-        await userService.create(user)
-    done(null, user)
+        const userr = await userService.create(user)
+        console.log(userr)
+    done(null, userr)
 }))
 
 

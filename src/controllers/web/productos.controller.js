@@ -2,6 +2,7 @@ import { productRepository } from '../../repositories/index.js'
 
 export async function productsGetController(req, res, next) {
     try {
+        console.log(req.session)
         let criterioDeBusqueda = {};
         for (let key in req.query) {
             if (key === 'title' || key === 'description' || key === 'price' || key === 'stock') {
