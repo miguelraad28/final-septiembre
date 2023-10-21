@@ -1,0 +1,25 @@
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        listProducts:
+          type: array
+          items:
+            type: object
+            properties:
+              productId:
+                type: string
+                format: objectId
+              cantidad:
+                type: number
+                minimum: 1
+          minItems: 1
+      required:
+        - listProducts
+      example:
+        listProducts:
+          - productId: "60cda4e6b2572c001e2a1c37"
+            cantidad: 2
+          - productId: "60cda4e6b2572c001e2a1c38"
+            cantidad: 1

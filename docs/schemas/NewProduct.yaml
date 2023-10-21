@@ -1,0 +1,40 @@
+components:
+  requestBodyes:
+    NewProduct:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: objectId
+        title:
+          type: string
+        description:
+          type: string
+        code:
+          type: string
+        price:
+          type: number
+          format: float
+        stock:
+          type: integer
+        thumbnail:
+          type: string
+        owner:
+          type: string
+      required:
+        - title
+        - description
+        - code
+        - price
+        - stock
+        - thumbnail
+        - owner
+      example:
+        _id: "60cda4e6b2572c001e2a1c39"
+        title: "Example Product"
+        description: "This is an example product"
+        code: "ASDASE"
+        price: 200
+        stock: 50
+        thumbnail: "image.jpg"
+        owner: "admin"

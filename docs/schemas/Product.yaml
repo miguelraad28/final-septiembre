@@ -1,0 +1,36 @@
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        code:
+          type: string
+        price:
+          type: number
+          format: float
+        stock:
+          type: integer
+        thumbnail:
+          type: string
+        owner:
+          type: string
+      required:
+        - title
+        - description
+        - code
+        - price
+        - stock
+        - thumbnail
+        - owner
+      example:
+        title: "Example Product"
+        description: "This is an example product"
+        code: "ABC123"
+        price: 200
+        stock: 50
+        thumbnail: "image.jpg"
+        owner: "admin"

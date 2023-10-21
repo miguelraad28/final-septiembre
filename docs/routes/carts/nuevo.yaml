@@ -1,0 +1,220 @@
+paths:
+  /carts:
+    post:
+      summary: Create a new cart
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: Cart created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        "500":
+          description: Internal server error
+
+    put:
+      summary: Update cart with product and quantity
+      tags:
+        - Carts
+      parameters:
+        - name: cartId
+          in: query
+          description: ID of the cart
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idProducto:
+                  type: string
+                cantidad:
+                  type: integer
+              required:
+                - idProducto
+                - cantidad
+      responses:
+        "200":
+          description: Cart updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        "500":
+          description: Internal server error
+
+    get:
+      summary: Get all carts
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: Carts retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cart'
+        "500":
+          description: Internal server error
+
+  /carts/{cid}:
+    put:
+      summary: Add product to cart
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          description: Cart ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idProducto:
+                  type: string
+                cantidad:
+                  type: integer
+              required:
+                - idProducto
+                - cantidad
+      responses:
+        "200":
+          description: Product added to cart successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        "401":
+          description: Unauthorized Error
+        "500":
+          description: Internal server error
+
+    get:
+      summary: Get cart by ID
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          description: Cart ID
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Cart found successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        "404":
+          description: Cart not found
+        "500":
+          description: Internal Server Error
+
+    delete:
+      summary: Empty cart by ID
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          description: Cart ID
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Cart emptied successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        "401":
+          description: Unauthorized Error
+        "500":
+          description: Internal server error
+  
+  /carts/{cid}/products/{pid}:
+    put:
+      summary: Update product quantity in cart
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          description: Cart ID
+          required: true
+          schema:
+            type: string
+        - name: pid
+          in: path
+          description: Product ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+              required:
+                - quantity
+      responses:
+        "200":
+          description: Product quantity updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        "401":
+          description: Unauthorized Error
+        "500":
+          description: Internal server error
+
+    delete:
+      summary: Remove product from cart
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          description: Cart ID
+          required: true
+          schema:
+            type: string
+        - name: pid
+          in: path
+          description: Product ID
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Product removed from cart successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        "401":
+          description: Unauthorized Error
+        "500":
+          description: Internal server error

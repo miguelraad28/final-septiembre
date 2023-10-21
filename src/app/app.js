@@ -5,6 +5,9 @@ import exphbs from 'express-handlebars'
 import { Server } from 'socket.io'
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
+import swaggerJsdoc from 'swagger-jsdoc'
+import swaggerUi from 'swagger-ui-express'
+
 
 
 import { PORT } from '../config/servidor.js'
@@ -34,6 +37,20 @@ hbs.handlebars.registerHelper('isLastConnectionOld', function (last_connection) 
     return new Date(last_connection) < twoDaysAgo;
 });
 
+
+
+const options = {
+    definition: {
+      openapi: '3.0.0',
+      info: {
+        title: 'Express API with Swagger',
+        description:
+          'A simple CRUD API application made with Express and documented with Swagger',
+      },
+    },
+    apis: ['./docs/**/*.yaml'],
+  }
+
 app.engine('handlebars', engine())
 app.set('views', './views')
 app.set('view engine', 'handlebars')
@@ -56,9 +73,11 @@ app.use(passportInitialize, passportSession)
 
 
 app.use(logger)
-
+const specs = swaggerJsdoc(options)
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs))
 app.use('/api', apiRouter)
 app.use('/', webRouter)
+
 app.use((error, req, res, next) => {
      let h1, message;
 
