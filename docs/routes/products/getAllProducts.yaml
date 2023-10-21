@@ -49,6 +49,7 @@ paths:
               schema:
                 type: array
                 items:
+                 
                   $ref: '#/components/schemas/NewProduct'
         "400":
           description: Bad request

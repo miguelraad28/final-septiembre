@@ -34,3 +34,5 @@ components:
         stock: 50
         thumbnail: "image.jpg"
         owner: "admin"
+      tags:
+        - Product
