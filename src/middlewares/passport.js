@@ -1,9 +1,10 @@
 import passport from 'passport'
 import { Strategy } from 'passport-local'
 import { Strategy as GithubStrategy } from 'passport-github2'
-import { validarQueSeanIguales } from '../utils/criptografia.js';
+import { hashear, validarQueSeanIguales } from '../utils/criptografia.js';
 import { adminEmail, adminPassword, githubCallbackUrl, githubClientId, githubClientSecret } from '../config/passport.js';
 import { userRepository } from '../repositories/index.js';
+import { userService } from '../services/user.service.js';
 
 
 
@@ -36,14 +37,14 @@ passport.use('github', new GithubStrategy({
 }, async (accessToken, refreshToken, profile, done) => {
     let user
         user = {
-                firstName: profile.userName,
+                firstName: profile.username,
                 lastName:  "Github",
-                email:  profile.email ?? "user.github@gmail.com",
+                email:  "user.github@gmail.com",
                 age:  18,
-                password:  "1234",
-                rol:  "user",
+                password:  hashear("1234"),
+                rol:  "user"
         }
-        await userRepository.create(user)
+        await userService.create(user)
     done(null, user)
 }))
 
